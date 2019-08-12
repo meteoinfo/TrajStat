@@ -33,7 +33,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.meteoinfo.data.mapdata.Field;
 import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.GroupNode;
@@ -80,9 +80,9 @@ public class FrmAddData extends javax.swing.JDialog {
         this.jComboBox_TimeZone.setSelectedItem(this.getTimeZoneString(0));
         this.jButton_AddData.setEnabled(false);
         this.jComboBox_Type.removeAllItems();
-        this.jComboBox_Type.addItem(DataTypes.Integer);
-        this.jComboBox_Type.addItem(DataTypes.Double);
-        this.jComboBox_Type.addItem(DataTypes.String);
+        this.jComboBox_Type.addItem(DataType.INT);
+        this.jComboBox_Type.addItem(DataType.DOUBLE);
+        this.jComboBox_Type.addItem(DataType.STRING);
         this.jComboBox_Type.setSelectedIndex(1);
     }
 
@@ -476,7 +476,7 @@ public class FrmAddData extends javax.swing.JDialog {
 
                     //---- Add data to layers
                     String fldName = this.jTextField_Name.getText();
-                    DataTypes aType = (DataTypes) this.jComboBox_Type.getSelectedItem();
+                    DataType aType = (DataType) this.jComboBox_Type.getSelectedItem();
                     int fLen = (Integer) this.jSpinner_Width.getValue();
                     int fDec = (Integer) this.jSpinner_Precision.getValue();                    
 
@@ -512,10 +512,10 @@ public class FrmAddData extends javax.swing.JDialog {
                                 aDateStr = format.format(cal.getTime());
                                 value = undef;
                                 switch (aType) {
-                                    case Integer:
+                                    case INT:
                                         value = (int) undef;
                                         break;
-                                    case String:
+                                    case STRING:
                                         value = "Null";
                                         break;
                                 }
@@ -532,14 +532,14 @@ public class FrmAddData extends javax.swing.JDialog {
                                         String dStr = myDataList.get(j)[1];
                                         value = dStr;
                                         switch (aType) {
-                                            case Integer:
+                                            case INT:
                                                 if (dStr.isEmpty()) {
                                                     value = (int) undef;
                                                 } else {
                                                     value = Integer.parseInt(dStr);
                                                 }
                                                 break;
-                                            case Double:
+                                            case DOUBLE:
                                                 if (dStr.isEmpty()) {
                                                     value = undef;
                                                 } else {
@@ -644,7 +644,7 @@ public class FrmAddData extends javax.swing.JDialog {
 
                     //---- Add data to layers
                     String fldName = this.jTextField_Name.getText();
-                    DataTypes aType = (DataTypes) this.jComboBox_Type.getSelectedItem();
+                    DataType aType = (DataType) this.jComboBox_Type.getSelectedItem();
                     int fLen = (Integer) this.jSpinner_Width.getValue();
                     int fDec = (Integer) this.jSpinner_Precision.getValue();
 
@@ -670,10 +670,10 @@ public class FrmAddData extends javax.swing.JDialog {
                             aDate = cal.getTime();
                             value = undef;
                             switch (aType) {
-                                case Integer:
+                                case INT:
                                     value = (int) undef;
                                     break;
-                                case String:
+                                case STRING:
                                     value = "Null";
                                     break;
                             }
@@ -685,14 +685,14 @@ public class FrmAddData extends javax.swing.JDialog {
                                     String dStr = myDataList.get(j)[2].toString();
                                     value = dStr;
                                     switch (aType) {
-                                        case Integer:
+                                        case INT:
                                             if (dStr.isEmpty()) {
                                                 value = (int) undef;
                                             } else {
                                                 value = Integer.parseInt(dStr);
                                             }
                                             break;
-                                        case Double:
+                                        case DOUBLE:
                                             if (dStr.isEmpty()) {
                                                 value = undef;
                                             } else {
@@ -755,18 +755,18 @@ public class FrmAddData extends javax.swing.JDialog {
     private void jComboBox_TypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_TypeActionPerformed
         // TODO add your handling code here:
         if (this.jComboBox_Type.getItemCount() > 0) {
-            switch ((DataTypes) this.jComboBox_Type.getSelectedItem()) {
-                case Integer:
+            switch ((DataType) this.jComboBox_Type.getSelectedItem()) {
+                case INT:
                     this.jSpinner_Width.setValue(8);
                     this.jSpinner_Precision.setValue(0);
                     this.jSpinner_Precision.setVisible(false);
                     break;
-                case Double:
+                case DOUBLE:
                     this.jSpinner_Width.setValue(10);
                     this.jSpinner_Precision.setValue(4);
                     this.jSpinner_Precision.setVisible(true);
                     break;
-                case String:
+                case STRING:
                     this.jSpinner_Width.setValue(20);
                     this.jSpinner_Precision.setValue(0);
                     this.jSpinner_Precision.setVisible(false);

@@ -96,7 +96,7 @@ public class FrmClusterStat extends javax.swing.JDialog {
         if (layer != null) {
             this.jComboBox_Field.removeAllItems();
             for (Field field : layer.getFields()) {
-                if (MIMath.isNumeric(field)) {
+                if (field.isNumeric()) {
                     this.jComboBox_Field.addItem(field.getColumnName());
                 }
             }

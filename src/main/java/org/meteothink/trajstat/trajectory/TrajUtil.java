@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 import org.meteoinfo.geoprocess.analysis.DistanceType;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.global.PointD;
-import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.layer.VectorLayer;
@@ -327,6 +327,7 @@ public class TrajUtil {
      * Join TGS files
      *
      * @param trajConfig Trajectory configure
+     * @return 
      * @throws IOException
      */
     public static String joinTGSFiles(TrajConfig trajConfig) throws IOException {
@@ -420,13 +421,13 @@ public class TrajUtil {
         sr.readLine();
 
         VectorLayer aLayer = new VectorLayer(ShapeTypes.PolylineZ);
-        aLayer.editAddField("ID", DataTypes.Integer);
-        aLayer.editAddField("Date", DataTypes.Date);
-        aLayer.editAddField("Year", DataTypes.Integer);
-        aLayer.editAddField("Month", DataTypes.Integer);
-        aLayer.editAddField("Day", DataTypes.Integer);
-        aLayer.editAddField("Hour", DataTypes.Integer);
-        aLayer.editAddField("Height", DataTypes.Float);
+        aLayer.editAddField("ID", DataType.INT);
+        aLayer.editAddField("Date", DataType.DATE);
+        aLayer.editAddField("Year", DataType.INT);
+        aLayer.editAddField("Month", DataType.INT);
+        aLayer.editAddField("Day", DataType.INT);
+        aLayer.editAddField("Hour", DataType.INT);
+        aLayer.editAddField("Height", DataType.FLOAT);
 
         int i = 0;
         List<PointZ> pList = new ArrayList<>();

@@ -38,7 +38,7 @@ import javax.swing.SwingWorker;
 import org.meteoinfo.data.mapdata.Field;
 import org.meteoinfo.global.GenericFileFilter;
 import org.meteoinfo.global.MIMath;
-import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.layer.LayerDrawType;
@@ -367,7 +367,7 @@ public class Main extends PluginBase {
             System.setProperty("user.dir", files[0].getParent());
 
             appFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            List<String> tgsfns = new ArrayList<String>();
+            List<String> tgsfns = new ArrayList<>();
             for (File file : files) {
                 tgsfns.add(file.getAbsolutePath());
             }
@@ -597,7 +597,7 @@ public class Main extends PluginBase {
         }
         frmMultiSel.setListModel(listModel);
         frmMultiSel.setVisible(true);
-        List<VectorLayer> layers = new ArrayList<VectorLayer>();
+        List<VectorLayer> layers = new ArrayList<>();
         if (frmMultiSel.isOK()) {
             listModel = frmMultiSel.getListModel();
             for (i = 0; i < listModel.getSize(); i++) {
@@ -664,7 +664,7 @@ public class Main extends PluginBase {
         }
         frmMultiSel.setListModel(listModel);
         frmMultiSel.setVisible(true);
-        List<VectorLayer> layers = new ArrayList<VectorLayer>();
+        List<VectorLayer> layers = new ArrayList<>();
         if (frmMultiSel.isOK()) {
             listModel = frmMultiSel.getListModel();
             for (i = 0; i < listModel.getSize(); i++) {
@@ -692,9 +692,9 @@ public class Main extends PluginBase {
             String fieldName = value.toString();
 
             //Average trajectory
-            List<String> valueList = new ArrayList<String>();
-            List<List<PointZ>> pointList = new ArrayList<List<PointZ>>();
-            List<Integer> trajNums = new ArrayList<Integer>();
+            List<String> valueList = new ArrayList<>();
+            List<List<PointZ>> pointList = new ArrayList<>();
+            List<Integer> trajNums = new ArrayList<>();
             String vStr;
             for (VectorLayer layer : layers) {
                 for (i = 0; i < layer.getAttributeTable().getNumRecords(); i++) {
@@ -761,7 +761,7 @@ public class Main extends PluginBase {
                     shpfn = shpfn + "." + extent;
                 }
                 VectorLayer trajLayer = new VectorLayer(ShapeTypes.PolylineZ);
-                trajLayer.editAddField(fieldName, DataTypes.String);
+                trajLayer.editAddField(fieldName, DataType.STRING);
                 for (i = 0; i < pointList.size(); i++) {
                     try {
                         PolylineZShape lineShape = new PolylineZShape();

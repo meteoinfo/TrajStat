@@ -49,7 +49,7 @@ import org.meteoinfo.plugin.IApplication;
 import org.meteoinfo.shape.PolylineZShape;
 import org.meteoinfo.geoprocess.analysis.DistanceType;
 import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.legend.LegendManage;
 import org.meteoinfo.legend.LegendScheme;
@@ -617,9 +617,9 @@ public class FrmClusterCal extends javax.swing.JDialog {
                 }
 
                 VectorLayer aLayer = new VectorLayer(ShapeTypes.PolylineZ);
-                aLayer.editAddField("Cluster", DataTypes.String);
-                aLayer.editAddField("Traj_Num", DataTypes.Integer);
-                aLayer.editAddField("Ratio", DataTypes.String);
+                aLayer.editAddField("Cluster", DataType.STRING);
+                aLayer.editAddField("Traj_Num", DataType.INT);
+                aLayer.editAddField("Ratio", DataType.STRING);
 
                 for (i = 0; i < CLev; i++) {
                     try {
@@ -929,7 +929,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
                 for (VectorLayer layer : layers) {
                     app.getProgressBarLabel().setText(layer.getLayerName());
                     if (layer.getFieldIdxByName("Cluster") == -1) {
-                        layer.editAddField("Cluster", DataTypes.String);
+                        layer.editAddField("Cluster", DataType.STRING);
                     }
                     sNum = layer.getShapeNum();
                     for (int i = 0; i < sNum; i++) {

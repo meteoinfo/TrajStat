@@ -67,8 +67,8 @@ import org.meteoinfo.shape.PointZ;
 import org.meteoinfo.shape.Polyline;
 import org.meteoinfo.shape.PolylineZShape;
 import org.meteoinfo.shape.ShapeTypes;
-import ucar.ma2.Array;
-import ucar.ma2.DataType;
+import org.meteoinfo.ndarray.Array;
+import org.meteoinfo.ndarray.DataType;
 
 /**
  *

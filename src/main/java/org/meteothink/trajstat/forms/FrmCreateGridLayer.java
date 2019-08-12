@@ -28,7 +28,7 @@ import org.meteoinfo.global.Extent;
 import org.meteoinfo.global.GenericFileFilter;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.global.PointD;
-import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
@@ -435,12 +435,12 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
 
             int i, j;
             VectorLayer aLayer = new VectorLayer(ShapeTypes.Polygon);
-            aLayer.editAddField("ID", DataTypes.Integer);
-            aLayer.editAddField("N_Traj", DataTypes.Integer);
-            aLayer.editAddField("Nij", DataTypes.Integer);
-            aLayer.editAddField("Mij", DataTypes.Integer);
-            aLayer.editAddField("PSCF", DataTypes.Double);
-            aLayer.editAddField("WPSCF", DataTypes.Double);
+            aLayer.editAddField("ID", DataType.INT);
+            aLayer.editAddField("N_Traj", DataType.INT);
+            aLayer.editAddField("Nij", DataType.INT);
+            aLayer.editAddField("Mij", DataType.INT);
+            aLayer.editAddField("PSCF", DataType.DOUBLE);
+            aLayer.editAddField("WPSCF", DataType.DOUBLE);
 
             double aX;
             double aY;
@@ -532,11 +532,11 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
 
             int i, j;
             VectorLayer aLayer = new VectorLayer(ShapeTypes.Polygon);
-            aLayer.editAddField("ID", DataTypes.Integer);
-            aLayer.editAddField("N_Traj", DataTypes.Integer);
-            aLayer.editAddField("Nij", DataTypes.Integer);
-            aLayer.editAddField("CWT", DataTypes.Double);
-            aLayer.editAddField("WCWT", DataTypes.Double);
+            aLayer.editAddField("ID", DataType.INT);
+            aLayer.editAddField("N_Traj", DataType.INT);
+            aLayer.editAddField("Nij", DataType.INT);
+            aLayer.editAddField("CWT", DataType.DOUBLE);
+            aLayer.editAddField("WCWT", DataType.DOUBLE);
 
             double aX;
             double aY;

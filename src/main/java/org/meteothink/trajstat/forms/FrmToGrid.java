@@ -197,7 +197,7 @@ public class FrmToGrid extends javax.swing.JDialog {
             VectorLayer layer = (VectorLayer) obj;
             this.jComboBox_Field.removeAllItems();
             for (Field field : layer.getFields()) {
-                if (MIMath.isNumeric(field)) {
+                if (field.isNumeric()) {
                     this.jComboBox_Field.addItem(field.getColumnName());
                 }
             }
