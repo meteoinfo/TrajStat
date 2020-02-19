@@ -42,12 +42,16 @@ public class FrmToGrid extends javax.swing.JDialog {
         //Set PSCF and CWT layers
         GroupNode pNode = app.getMapDocument().getActiveMapFrame().getGroupByName("PSCF");
         this.jComboBox_Layer.removeAllItems();
-        for (LayerNode lNode : pNode.getLayers()) {
-            this.jComboBox_Layer.addItem(lNode.getMapLayer());
+        if (pNode != null) {
+            for (LayerNode lNode : pNode.getLayers()) {
+                this.jComboBox_Layer.addItem(lNode.getMapLayer());
+            }
         }
         pNode = app.getMapDocument().getActiveMapFrame().getGroupByName("CWT");
-        for (LayerNode lNode : pNode.getLayers()) {
-            this.jComboBox_Layer.addItem(lNode.getMapLayer());
+        if (pNode != null) {
+            for (LayerNode lNode : pNode.getLayers()) {
+                this.jComboBox_Layer.addItem(lNode.getMapLayer());
+            }
         }
         if (this.jComboBox_Layer.getItemCount() > 0) {
             this.jComboBox_Layer.setSelectedIndex(0);
