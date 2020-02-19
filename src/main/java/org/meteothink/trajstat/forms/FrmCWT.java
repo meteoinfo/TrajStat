@@ -66,7 +66,7 @@ public class FrmCWT extends javax.swing.JDialog {
         this.jTree_TrajLayers.setModel(model);
         checkTreeManager = new CheckTreeManager(this.jTree_TrajLayers);
         TreePath path = this.jTree_TrajLayers.getPathForRow(1);
-        CheckTreeSelectionModel selModel = (CheckTreeSelectionModel) checkTreeManager.getSelectionModel();
+        CheckTreeSelectionModel selModel = checkTreeManager.getSelectionModel();
         selModel.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
