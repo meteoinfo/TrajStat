@@ -22,7 +22,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -639,11 +639,11 @@ public class FrmTrajMonth extends javax.swing.JDialog {
     /**
      * Set Trajectory config
      *
-     * @param trajConfig Trajctory config
+     * @param tc Trajctory config
      */
     private void setTrajConfig(TrajConfig tc) {
         this._trajConfig = tc;
-        SimpleDateFormat format = new SimpleDateFormat("yy MM");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yy MM");
         this.jTextField_YearMonth.setText(format.format(tc.getStartTime()));
         if (tc.getLocations().size() > 1) {
             this.jCheckBox_MultiLocations.setSelected(true);
@@ -788,7 +788,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
                 //Loop
                 int dayNum = FrmTrajMonth.this._trajConfig.getDayNum();
                 int hourNum = FrmTrajMonth.this._trajConfig.getStartHoursNum();                
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");                
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");                
                 for (int i = 0; i < dayNum; i++) {
                     _trajConfig.upateStartTime(i, 0);
                     String tgsfn = _trajConfig.getOutPath() + format.format(_trajConfig.getStartTime())
@@ -827,12 +827,12 @@ public class FrmTrajMonth extends javax.swing.JDialog {
 
                 //Loop
                 int dayNum = FrmTrajMonth.this._trajConfig.getDayNum();
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMM");
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMM");
                 String monthfn = _trajConfig.getOutPath() + format.format(_trajConfig.getStartTime()) + ".tgs";
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(monthfn)));
                 bw.write("start_year,start_month,start_day,start_hour,year,month,day,hour,age_hour,latitude,longitude,height,press");
                 bw.newLine();
-                format = new SimpleDateFormat("yyyyMMdd");
+                format = DateTimeFormatter.ofPattern("yyyyMMdd");
                 for (int i = 0; i < dayNum; i++) {
                     _trajConfig.upateStartTime(i, 0);
                     String tgsfn = _trajConfig.getOutPath() + format.format(_trajConfig.getStartTime()) + ".tgs";

@@ -22,12 +22,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import java.time.format.DateTimeFormatter;
+
 import org.meteoinfo.geoprocess.analysis.DistanceType;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.global.PointD;
@@ -308,7 +308,7 @@ public class TrajUtil {
     public static void trajToTGS(TrajConfig trajConfig) throws IOException {
         int dayNum = trajConfig.getDayNum();
         int hourNum = trajConfig.getStartHoursNum();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         for (int i = 0; i < dayNum; i++) {
             trajConfig.upateStartTime(i, 0);
             String tgsfn = trajConfig.getOutPath() + format.format(trajConfig.getStartTime())
@@ -332,12 +332,12 @@ public class TrajUtil {
      */
     public static String joinTGSFiles(TrajConfig trajConfig) throws IOException {
         int dayNum = trajConfig.getDayNum();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMM");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMM");
         String monthfn = trajConfig.getOutPath() + format.format(trajConfig.getStartTime()) + ".tgs";
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(monthfn)));
         bw.write("start_year,start_month,start_day,start_hour,year,month,day,hour,age_hour,latitude,longitude,height,press");
         bw.newLine();
-        format = new SimpleDateFormat("yyyyMMdd");
+        format = DateTimeFormatter.ofPattern("yyyyMMdd");
         for (int i = 0; i < dayNum; i++) {
             trajConfig.upateStartTime(i, 0);
             String tgsfn = trajConfig.getOutPath() + format.format(trajConfig.getStartTime()) + ".tgs";
@@ -406,10 +406,8 @@ public class TrajUtil {
      * @return The vector layer
      */
     public static VectorLayer convertToShapeFile(String tgsFile, String shpFile) throws FileNotFoundException, IOException, Exception {
-        Date sDate = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(sDate);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH");
+        LocalDateTime sDate = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
         String aLine;
         String sMonth;
         String sDay;
@@ -463,10 +461,10 @@ public class TrajUtil {
                     if (aLayer.editInsertShape(aPolylineZ, shapeNum)) {
                         aLayer.editCellValue("ID", shapeNum, shapeNum + 1);
                         aLayer.editCellValue("Date", shapeNum, sDate);
-                        aLayer.editCellValue("Year", shapeNum, cal.get(Calendar.YEAR));
-                        aLayer.editCellValue("Month", shapeNum, cal.get(Calendar.MONTH) + 1);
-                        aLayer.editCellValue("Day", shapeNum, cal.get(Calendar.DAY_OF_MONTH));
-                        aLayer.editCellValue("Hour", shapeNum, cal.get(Calendar.HOUR_OF_DAY));
+                        aLayer.editCellValue("Year", shapeNum, sDate.getYear());
+                        aLayer.editCellValue("Month", shapeNum, sDate.getMonthValue());
+                        aLayer.editCellValue("Day", shapeNum, sDate.getDayOfMonth());
+                        aLayer.editCellValue("Hour", shapeNum, sDate.getHour());
                         aLayer.editCellValue("Height", shapeNum, height);
                     }
                 }
@@ -474,9 +472,7 @@ public class TrajUtil {
                 sDay = lineArray[2];
                 sHour = lineArray[3];
                 height = Float.parseFloat(lineArray[11]);
-                sDate = format.parse(sYear + "-" + sMonth + "-" + sDay + " " + sHour);
-                cal.setTime(sDate);
-                //aDateStr = sDate.ToString("yyyyMMddHH");
+                sDate = LocalDateTime.parse(sYear + "-" + sMonth + "-" + sDay + " " + sHour, format);
                 pList = new ArrayList<>();
             }
             PointZ aPoint = new PointZ();
@@ -509,10 +505,10 @@ public class TrajUtil {
             if (aLayer.editInsertShape(aPolylineZ, shapeNum)) {
                 aLayer.editCellValue("ID", shapeNum, shapeNum + 1);
                 aLayer.editCellValue("Date", shapeNum, sDate);
-                aLayer.editCellValue("Year", shapeNum, cal.get(Calendar.YEAR));
-                aLayer.editCellValue("Month", shapeNum, cal.get(Calendar.MONTH) + 1);
-                aLayer.editCellValue("Day", shapeNum, cal.get(Calendar.DAY_OF_MONTH));
-                aLayer.editCellValue("Hour", shapeNum, cal.get(Calendar.HOUR_OF_DAY));
+                aLayer.editCellValue("Year", shapeNum, sDate.getYear());
+                aLayer.editCellValue("Month", shapeNum, sDate.getMonthValue());
+                aLayer.editCellValue("Day", shapeNum, sDate.getDayOfMonth());
+                aLayer.editCellValue("Hour", shapeNum, sDate.getHour());
                 aLayer.editCellValue("Height", shapeNum, height);
             }
         }
@@ -540,7 +536,7 @@ public class TrajUtil {
     public static void removeTrajFiles(TrajConfig trajConfig) {
         int dayNum = trajConfig.getDayNum();
         int hourNum = trajConfig.getStartHoursNum();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         for (int i = 0; i < dayNum; i++) {
             trajConfig.upateStartTime(i, 0);
             String tgsfn = trajConfig.getOutPath() + format.format(trajConfig.getStartTime()) + ".tgs";

@@ -20,10 +20,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -410,7 +409,7 @@ public class FrmAddData extends javax.swing.JDialog {
             int eDateFldIdx = this.jComboBox_EndDateField.getSelectedIndex();
             int dataFldIdx = this.jComboBox_DataField.getSelectedIndex();
             String formatStr = this.jComboBox_DateFormat.getSelectedItem().toString();
-            SimpleDateFormat format = new SimpleDateFormat(formatStr);
+            DateTimeFormatter format = DateTimeFormatter.ofPattern(formatStr);
             String timeZoneStr = this.jComboBox_TimeZone.getSelectedItem().toString();
             int timeZone = this.getTimeZone(timeZoneStr);      
             String mvalueStr = this.jTextField_MissingValue.getText();
@@ -489,8 +488,8 @@ public class FrmAddData extends javax.swing.JDialog {
                     int aMonth;
                     int aDay;
                     int aHour;
-                    Calendar cal = Calendar.getInstance();
                     Object value;
+                    LocalDateTime dt;
 
                     for (VectorLayer layer : layers) {
                         app.getProgressBarLabel().setText(layer.getLayerName());
@@ -504,12 +503,11 @@ public class FrmAddData extends javax.swing.JDialog {
                         dateIdx = layer.getFieldIdxByName("Date");
                         if (dateIdx > -1) {
                             for (i = 0; i < sNum; i++) {
-                                Date aDate = (Date) layer.getCellValue("Date", i);
-                                cal.setTime(aDate);
+                                dt = (LocalDateTime) layer.getCellValue("Date", i);
                                 int hour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
-                                cal.set(Calendar.HOUR_OF_DAY, hour);
-                                cal.add(Calendar.HOUR_OF_DAY, timeZone);
-                                aDateStr = format.format(cal.getTime());
+                                dt = dt.withHour(hour);
+                                dt = dt.plusHours(timeZone);
+                                aDateStr = format.format(dt);
                                 value = undef;
                                 switch (aType) {
                                     case INT:
@@ -559,9 +557,9 @@ public class FrmAddData extends javax.swing.JDialog {
                                 aMonth = Integer.parseInt(layer.getCellValue("Month", i).toString());
                                 aDay = Integer.parseInt(layer.getCellValue("Day", i).toString());
                                 aHour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
-                                cal.set(aYear, aMonth, dateIdx, aDay, aHour);
-                                cal.add(Calendar.HOUR_OF_DAY, timeZone);
-                                aDateStr = format.format(cal.getTime());
+                                dt = LocalDateTime.of(aYear, aMonth, dateIdx, aDay, aHour);
+                                dt = dt.plusHours(timeZone);
+                                aDateStr = format.format(dt);
                                 int tlen;
                                 String dstr;
                                 for (j = 0; j <= N - 1; j++) {
@@ -649,7 +647,6 @@ public class FrmAddData extends javax.swing.JDialog {
                     int fDec = (Integer) this.jSpinner_Precision.getValue();
 
                     int sNum, CFldIdx, j;
-                    Calendar cal = Calendar.getInstance();                    
                     Object value;
 
                     for (VectorLayer layer : layers) {
@@ -662,12 +659,10 @@ public class FrmAddData extends javax.swing.JDialog {
                         }
                         sNum = layer.getShapeNum();
                         for (i = 0; i < sNum; i++) {
-                            Date aDate = (Date) layer.getCellValue("Date", i);
-                            cal.setTime(aDate);
+                            LocalDateTime aDate = (LocalDateTime) layer.getCellValue("Date", i);
                             int hour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
-                            cal.set(Calendar.HOUR_OF_DAY, hour);
-                            cal.add(Calendar.HOUR_OF_DAY, timeZone);
-                            aDate = cal.getTime();
+                            aDate = aDate.withHour(hour);
+                            aDate = aDate.plusHours(timeZone);
                             value = undef;
                             switch (aType) {
                                 case INT:
@@ -679,9 +674,9 @@ public class FrmAddData extends javax.swing.JDialog {
                             }
                             layer.editCellValue(CFldIdx, i, value);
                             for (j = 0; j < N; j++) {
-                                Date sdate = (Date)myDataList.get(j)[0];
-                                Date edate = (Date)myDataList.get(j)[1];
-                                if ((aDate.equals(sdate) || aDate.after(sdate)) && aDate.before(edate)) {
+                                LocalDateTime sdate = (LocalDateTime) myDataList.get(j)[0];
+                                LocalDateTime edate = (LocalDateTime) myDataList.get(j)[1];
+                                if ((aDate.equals(sdate) || aDate.isAfter(sdate)) && aDate.isBefore(edate)) {
                                     String dStr = myDataList.get(j)[2].toString();
                                     value = dStr;
                                     switch (aType) {
@@ -718,7 +713,7 @@ public class FrmAddData extends javax.swing.JDialog {
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FrmAddData.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(FrmAddData.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

@@ -18,10 +18,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -238,21 +237,19 @@ public class FrmConvertToLine extends javax.swing.JDialog {
 
                 //---- Loop
                 int sNum = 0;                
-                Date aDate;
+                LocalDateTime aDate;
                 BufferedWriter sw = new BufferedWriter(new FileWriter(new File(outFile)));
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHH");
                 for (VectorLayer layer : layers) {
                     app.getProgressBarLabel().setText(layer.getLayerName());
                     String aLine;
                     PointZ aPoint;
                     sNum = layer.getShapeNum();                    
                     for (i = 0; i < sNum; i++) {
-                        aDate = (Date) layer.getCellValue("Date", i);
-                        cal.setTime(aDate);
+                        aDate = (LocalDateTime) layer.getCellValue("Date", i);
                         int hour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
-                        cal.set(Calendar.HOUR_OF_DAY, hour);
-                        aLine = format.format(cal.getTime());
+                        aDate = aDate.withHour(hour);
+                        aLine = format.format(aDate);
                         String height = layer.getCellValue("Height", i).toString();
                         aLine = aLine + "," + height;
                         PolylineZShape aPLZ = (PolylineZShape) layer.getShapes().get(i);

@@ -22,10 +22,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -846,25 +845,22 @@ public class FrmClusterCal extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DefaultListModel listModel = (DefaultListModel) this.checkBoxList_Data.getModel();
-        List<Date> tDates = new ArrayList<>();
+        List<LocalDateTime> tDates = new ArrayList<>();
         List<Integer> pNumsAll = new ArrayList<>();
         List<Integer> pNums = new ArrayList<>();
         List<Integer> pNumNums = new ArrayList<>();
         int pointNum = 0;
         int idx;        
-        Date date;
+        LocalDateTime date;
         int hour;
-        Calendar cal = Calendar.getInstance();
         for (int i = 0; i < listModel.getSize(); i++) {
             if (((CheckBoxListEntry) listModel.get(i)).isSelected()) {
                 VectorLayer layer = (VectorLayer) ((CheckBoxListEntry) listModel.get(i)).getValue();                
                 for (int j = 0; j < layer.getShapeNum(); j++) {
                     PolylineZShape shape = (PolylineZShape) layer.getShapes().get(j);
-                    date = (Date)layer.getCellValue("Date", j);
-                    cal.setTime(date);
+                    date = (LocalDateTime) layer.getCellValue("Date", j);
                     hour = (int)layer.getCellValue("Hour", j);
-                    cal.set(Calendar.HOUR, hour);
-                    date = cal.getTime();
+                    date = date.withHour(hour);
                     tDates.add(date);
                     pointNum = shape.getPointNum();
                     pNumsAll.add(pointNum);
@@ -896,7 +892,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
             sb.append(String.format("Most frequent point number: %d", num));
             sb.append("\n");
             sb.append("Trajectories may not calculated correctly:");            
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             for (int i = 0; i < tDates.size(); i++){
                 if (pNumsAll.get(i) != num){
                     sb.append("\n");
@@ -922,9 +918,8 @@ public class FrmClusterCal extends javax.swing.JDialog {
                 int sNum;
                 int j;
                 String aDateStr;
-                Date aDate;
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
-                Calendar cal = Calendar.getInstance();
+                LocalDateTime aDate;
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHH");
 
                 for (VectorLayer layer : layers) {
                     app.getProgressBarLabel().setText(layer.getLayerName());
@@ -933,11 +928,10 @@ public class FrmClusterCal extends javax.swing.JDialog {
                     }
                     sNum = layer.getShapeNum();
                     for (int i = 0; i < sNum; i++) {
-                        aDate = (Date) layer.getCellValue("Date", i);
-                        cal.setTime(aDate);
+                        aDate = (LocalDateTime) layer.getCellValue("Date", i);
                         int hour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
-                        cal.set(Calendar.HOUR_OF_DAY, hour);
-                        aDateStr = format.format(cal.getTime());
+                        aDate = aDate.withHour(hour);
+                        aDateStr = format.format(aDate);
                         String height = layer.getCellValue("Height", i).toString();
                         for (j = 0; j < cDataArray.size(); j++) {
                             if (aDateStr.equals(cDataArray.get(j)[0]) && height.equals(cDataArray.get(j)[1])) {

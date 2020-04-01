@@ -14,11 +14,12 @@
 package org.meteothink.trajstat.trajectory;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import org.meteoinfo.global.util.GlobalUtil;
+import org.meteoinfo.global.util.JDateUtil;
 
 /**
  *
@@ -140,18 +141,14 @@ public class TrajConfig extends TrajControl {
      */
     public void upateStartEndDays(){
         this._startDay = 1;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(this.getStartTime());
-        this._endDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        this._endDay = JDateUtil.getDaysOfMonth(this.getStartTime().getYear(), this.getStartTime().getMonthValue());
     }
     
     @Override
     public void loadControlFile(String fileName){
         super.loadControlFile(fileName);
-        this._startHours = new ArrayList<Integer>();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(this.getStartTime());
-        this._startHours.add(cal.get(Calendar.HOUR_OF_DAY));
+        this._startHours = new ArrayList<>();
+        this._startHours.add(this.getStartTime().getHour());
         this.upateStartEndDays();
     }
     
@@ -185,16 +182,12 @@ public class TrajConfig extends TrajControl {
      * @param hourIdx 
      */
     public void upateStartTime(int dayIdx, int hourIdx){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(this.getStartTime());
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = _startDay + dayIdx;
-        int hour = _startHours.get(hourIdx);
-        cal.set(year, month, day, hour, 0);
-        this.setStartTime(cal.getTime());
-        SimpleDateFormat format = new SimpleDateFormat("yyMMddHH");
-        this.setTrajFileName(format.format(cal.getTime()));
+        LocalDateTime dt = this.getStartTime();
+        dt = dt.withDayOfMonth(_startDay + dayIdx);
+        dt = dt.withHour(_startHours.get(hourIdx));
+        this.setStartTime(dt);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyMMddHH");
+        this.setTrajFileName(format.format(dt));
     }
     
     /**
@@ -203,9 +196,8 @@ public class TrajConfig extends TrajControl {
      * @param month The month
      */
     public void initStartTime(int year, int month){
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month - 1, this._startDay, this._startHours.get(0), 0, 0);
-        this.setStartTime(cal.getTime());
+        LocalDateTime dt = LocalDateTime.of(year, month, this._startDay, this._startHours.get(0), 0, 0);
+        this.setStartTime(dt);
     }
     
     // </editor-fold>

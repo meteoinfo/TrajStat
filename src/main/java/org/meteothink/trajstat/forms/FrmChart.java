@@ -19,10 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -218,18 +217,15 @@ public class FrmChart extends JDialog {
         if (trajLayer != null) {
             if (trajLayer.getShapeType() == ShapeTypes.PolylineZ) {
                 this.isSingleLegend = trajLayer.getLegendScheme().getLegendType() != LegendType.UniqueValue;
-                Calendar cal = Calendar.getInstance();
                 int n = 0;
-                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHH");
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHH");
                 String dhstr;
                 for (int i = 0; i < trajLayer.getShapeNum(); i++) {
                     if (trajLayer.getShapes().get(i).isSelected()) {
                         if (trajLayer.getFieldIdxByName("Date") >= 0) {
-                            Date aDate = (Date) trajLayer.getCellValue("Date", i);
+                            LocalDateTime aDate = (LocalDateTime) trajLayer.getCellValue("Date", i);
                             int hour = Integer.parseInt(trajLayer.getCellValue("Hour", i).toString());
-                            cal.setTime(aDate);
-                            cal.set(Calendar.HOUR_OF_DAY, hour);
-                            aDate = cal.getTime();
+                            aDate = aDate.withHour(hour);
                             dhstr = df.format(aDate);
                             float height = (float) trajLayer.getCellValue("Height", i);
                             dhstr = dhstr + "_" + String.valueOf(height);

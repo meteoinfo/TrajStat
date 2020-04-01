@@ -13,18 +13,11 @@
  */
 package org.meteothink.trajstat.trajectory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,8 +27,8 @@ import java.util.logging.Logger;
  */
 public class TrajControl {
     // <editor-fold desc="Variables">
-    private Date _startTime = new Date();
-    private List<Location> _locations = new ArrayList<Location>();
+    private LocalDateTime _startTime = LocalDateTime.now();
+    private List<Location> _locations = new ArrayList<>();
     private int _runHours = -24;
     private int _vertical = 0;
     private float _topOfModel = 10000.0f;
@@ -51,7 +44,7 @@ public class TrajControl {
      * Get starting time
      * @return Starting time
      */
-    public Date getStartTime(){
+    public LocalDateTime getStartTime(){
         return _startTime;
     }
     
@@ -59,7 +52,7 @@ public class TrajControl {
      * Set starting time
      * @param value Starting time
      */
-    public void setStartTime(Date value){
+    public void setStartTime(LocalDateTime value){
         _startTime = value;
     }
     
@@ -220,10 +213,10 @@ public class TrajControl {
         try {
             BufferedReader sr = new BufferedReader(new FileReader(new File(fileName)));
             String stimeStr = sr.readLine().trim();
-            SimpleDateFormat format = new SimpleDateFormat("yy MM dd HH");
-            this._startTime = format.parse(stimeStr);
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yy MM dd HH");
+            this._startTime = LocalDateTime.parse(stimeStr, format);
             int locnum = Integer.parseInt(sr.readLine());
-            this._locations = new ArrayList<Location>();
+            this._locations = new ArrayList<>();
             String[] dataArray;
             for (int i = 0; i < locnum; i++){
                 dataArray = sr.readLine().trim().split("\\s+");
@@ -251,8 +244,6 @@ public class TrajControl {
             Logger.getLogger(TrajControl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TrajControl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(TrajControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -264,7 +255,7 @@ public class TrajControl {
         BufferedWriter sw = null;
         try {
             sw = new BufferedWriter(new FileWriter(new File(fileName)));
-            SimpleDateFormat format = new SimpleDateFormat("yy MM dd HH");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yy MM dd HH");
             sw.write(format.format(_startTime));
             sw.newLine();
             sw.write(String.valueOf(this._locations.size()));

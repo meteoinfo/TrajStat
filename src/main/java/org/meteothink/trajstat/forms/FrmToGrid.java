@@ -5,19 +5,18 @@
  */
 package org.meteothink.trajstat.forms;
 
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import org.meteoinfo.data.mapdata.Field;
 import org.meteoinfo.data.GridData;
+import org.meteoinfo.data.mapdata.Field;
 import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.global.MIMath;
 import org.meteoinfo.global.PointD;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.GroupNode;
 import org.meteoinfo.legend.LayerNode;
 import org.meteoinfo.plugin.IApplication;
 import org.meteoinfo.shape.Shape;
+
+import javax.swing.*;
+import java.io.File;
 
 /**
  *
