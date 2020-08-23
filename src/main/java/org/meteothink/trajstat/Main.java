@@ -83,7 +83,7 @@ public class Main extends PluginBase {
     public Main() {
         this.setName("TrajStat");
         this.setAuthor("Yaqiang Wang");
-        this.setVersion("1.4.9");
+        this.setVersion("1.5");
         this.setDescription("Trajctory statictis plugin");
         path = GlobalUtil.getAppPath(Main.class);
     }

@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import org.meteoinfo.chart.Chart;
 import org.meteoinfo.chart.ChartLegend;
 import org.meteoinfo.chart.ChartPanel;
@@ -68,6 +70,7 @@ import org.meteoinfo.shape.PolylineZShape;
 import org.meteoinfo.shape.ShapeTypes;
 import org.meteoinfo.ndarray.Array;
 import org.meteoinfo.ndarray.DataType;
+import org.meteoinfo.image.svg.SVGUtil;
 
 /**
  *
@@ -101,16 +104,20 @@ public class FrmChart extends JDialog {
         super(parent, modal);
         initComponents();
 
-        this.app = (IApplication) parent;
-        app.getMapDocument().getActiveMapFrame().getMapView().addShapeSelectedListener(new IShapeSelectedListener() {
-            @Override
-            public void shapeSelectedEvent(ShapeSelectedEvent event) {
-                onShapeSelected();
-            }
-        });
+        if (parent != null) {
+            this.app = (IApplication) parent;
+            app.getMapDocument().getActiveMapFrame().getMapView().addShapeSelectedListener(new IShapeSelectedListener() {
+                @Override
+                public void shapeSelectedEvent(ShapeSelectedEvent event) {
+                    onShapeSelected();
+                }
+            });
+        }
         this.setTitle("Pressure profile plot");
 
-        this.updateMaplayers();
+        if (parent != null) {
+            this.updateMaplayers();
+        }
 
         //Set icon image
         BufferedImage image = null;
@@ -120,7 +127,8 @@ public class FrmChart extends JDialog {
         }
         this.setIconImage(image);
 
-        this.button_Sel.doClick();
+        if (parent != null)
+            this.button_Sel.doClick();
     }
 
     private void initComponents() {
@@ -134,9 +142,11 @@ public class FrmChart extends JDialog {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800, 400);
 
+        ClassLoader classLoader = FrmChart.class.getClassLoader();
+
         //Tool bar
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/Select.png"));
-        button_Sel.setIcon(icon);
+        SVGUtil.setSVGIcon(button_Sel, "org/meteothink/trajstat/icons/select.svg", classLoader);
+        //button_Sel.setIcon(new FlatSVGIcon("org/meteothink/trajstat/icons/select.svg"));
         button_Sel.setToolTipText("Select Trajectory");
         button_Sel.addActionListener(new ActionListener() {
             @Override
@@ -146,8 +156,8 @@ public class FrmChart extends JDialog {
         });
         toolBar.add(button_Sel);
 
-        icon = new ImageIcon(this.getClass().getResource("/images/Remove.png"));
-        button_Remove.setIcon(icon);
+        SVGUtil.setSVGIcon(button_Remove, "org/meteoinfo/icons/remove.svg");
+        //button_Remove.setIcon(new FlatSVGIcon("org/meteoinfo/icons/remove.svg"));
         button_Remove.setToolTipText("Remove Last Trajectory");
         button_Remove.addActionListener(new ActionListener() {
             @Override
@@ -157,8 +167,8 @@ public class FrmChart extends JDialog {
         });
         toolBar.add(button_Remove);
 
-        icon = new ImageIcon(this.getClass().getResource("/images/RemoveAll.png"));
-        button_RemoveAll.setIcon(icon);
+        SVGUtil.setSVGIcon(button_RemoveAll, "org/meteoinfo/icons/delete.svg");
+        //button_RemoveAll.setIcon(new FlatSVGIcon("org/meteoinfo/icons/delete.svg"));
         button_RemoveAll.setToolTipText("Remove All Trajectories");
         button_RemoveAll.addActionListener(new ActionListener() {
             @Override
@@ -169,8 +179,7 @@ public class FrmChart extends JDialog {
         toolBar.add(button_RemoveAll);
         toolBar.addSeparator();
 
-        icon = new ImageIcon(this.getClass().getResource("/images/3D_16px.png"));
-        button_3D.setIcon(icon);
+        SVGUtil.setSVGIcon(button_3D, "org/meteothink/trajstat/icons/figure-3d.svg", classLoader);
         button_3D.setToolTipText("3D view");
         button_3D.addChangeListener(new ChangeListener() {
             @Override
@@ -471,4 +480,43 @@ public class FrmChart extends JDialog {
         }
     }
     // </editor-fold>
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmClusterCal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                FrmChart dialog = new FrmChart(null, true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 }

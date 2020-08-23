@@ -40,6 +40,7 @@ import org.meteoinfo.chart.ChartPanel;
 import org.meteoinfo.chart.plot.XY1DPlot;
 import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.geoprocess.analysis.Clustering;
+import org.meteoinfo.image.svg.SVGUtil;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.GroupNode;
@@ -154,7 +155,8 @@ public class FrmClusterCal extends javax.swing.JDialog {
 
         jLabel4.setText("Output file:");
 
-        jButton_OutputFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TSB_Open.Image.png"))); // NOI18N
+        //jButton_OutputFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TSB_Open.Image.png"))); // NOI18N
+        SVGUtil.setSVGIcon(jButton_OutputFile, "org/meteoinfo/icons/file-open.svg");
         jButton_OutputFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_OutputFileActionPerformed(evt);

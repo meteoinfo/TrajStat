@@ -68,31 +68,31 @@ public class FrmAbout extends javax.swing.JDialog {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TrajStat_1.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
+        //jLabel2.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
         jLabel2.setText("TrajStat");
 
-        jLabel3.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
+        //jLabel3.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
         jLabel3.setText("Trajectory Statistics plugin");
 
-        jLabel4.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
+        //jLabel4.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel4.setText("Version:");
 
-        jLabel5.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
+        //jLabel5.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel5.setText("Author:");
 
         jLabel6.setText("Yaqiang Wang");
 
         jLabel_Version.setText("...");
 
-        jLabel8.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
+        //jLabel8.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel8.setText("Email:");
 
         jLabel9.setText("yaqiang.wang@gmail.com");
 
-        jLabel10.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
+        //jLabel10.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel10.setText("Homepage:");
 
-        jLabel11.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel11.setForeground(new java.awt.Color(0, 153, 204));
         jLabel11.setText("http://www.meteothink.org");
         jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {

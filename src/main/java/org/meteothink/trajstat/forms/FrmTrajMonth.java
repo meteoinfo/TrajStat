@@ -13,7 +13,7 @@
  */
 package org.meteothink.trajstat.forms;
 
-import java.awt.Cursor;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,6 +31,8 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
+
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.meteothink.trajstat.trajectory.Location;
 import org.meteothink.trajstat.trajectory.TrajConfig;
 import org.meteothink.trajstat.trajectory.TrajUtil;
@@ -124,14 +126,16 @@ public class FrmTrajMonth extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Trajectory Monthly Calculation");
-        setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        setFont(this.getFont().deriveFont(10.0f));
 
-        jLabel_YearMonth.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Font font_12 = this.getFont().deriveFont(12.0f);
+
+        jLabel_YearMonth.setFont(font_12);
         jLabel_YearMonth.setText("Year_Month (YY MM):");
 
-        jTextField_YearMonth.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_YearMonth.setFont(font_12);
 
-        jCheckBox_MultiLocations.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jCheckBox_MultiLocations.setFont(font_12);
         jCheckBox_MultiLocations.setText("Multi_Locations");
         jCheckBox_MultiLocations.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,13 +143,13 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jLabel_YearMonth1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth1.setFont(font_12);
         jLabel_YearMonth1.setText("Start Location (Lat Lon Height(m agl)):");
 
-        jTextField_StartLocation.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_StartLocation.setFont(font_12);
         jTextField_StartLocation.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jButton_Locations.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_Locations.setFont(font_12);
         jButton_Locations.setText("Locations");
         jButton_Locations.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,45 +157,45 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jLabel_YearMonth2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth2.setFont(font_12);
         jLabel_YearMonth2.setText("Run Hours:");
 
-        jTextField_RunHours.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_RunHours.setFont(font_12);
         jTextField_RunHours.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jLabel_YearMonth3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth3.setFont(font_12);
         jLabel_YearMonth3.setText("Top of Model (m agl):");
 
-        jTextField_TopOfModel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_TopOfModel.setFont(font_12);
         jTextField_TopOfModel.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jLabel_YearMonth4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth4.setFont(font_12);
         jLabel_YearMonth4.setText("Starting Hours (HH HH ...):");
 
-        jTextField_StartHours.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_StartHours.setFont(font_12);
         jTextField_StartHours.setPreferredSize(new java.awt.Dimension(6, 24));
 
         jPanel_Vertical.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vertical", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
-        jPanel_Vertical.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jPanel_Vertical.setFont(font_12);
 
         buttonGroup1.add(jRadioButton_Isob);
-        jRadioButton_Isob.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton_Isob.setFont(font_12);
         jRadioButton_Isob.setText("1: isob");
 
         buttonGroup1.add(jRadioButton_Isen);
-        jRadioButton_Isen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton_Isen.setFont(font_12);
         jRadioButton_Isen.setText("2: isen");
 
         buttonGroup1.add(jRadioButton_Dens);
-        jRadioButton_Dens.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton_Dens.setFont(font_12);
         jRadioButton_Dens.setText("3: dens");
 
         buttonGroup1.add(jRadioButton_Data);
-        jRadioButton_Data.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton_Data.setFont(font_12);
         jRadioButton_Data.setText("0: data");
 
         buttonGroup1.add(jRadioButton_Sigma);
-        jRadioButton_Sigma.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton_Sigma.setFont(font_12);
         jRadioButton_Sigma.setText("4: sigma");
 
         javax.swing.GroupLayout jPanel_VerticalLayout = new javax.swing.GroupLayout(jPanel_Vertical);
@@ -224,7 +228,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton_Clear.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_Clear.setFont(font_12);
         jButton_Clear.setText("Clear");
         jButton_Clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,7 +236,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jButton_AddMeteoFiles.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_AddMeteoFiles.setFont(font_12);
         jButton_AddMeteoFiles.setText("Add Meteorological Files");
         jButton_AddMeteoFiles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,15 +246,15 @@ public class FrmTrajMonth extends javax.swing.JDialog {
 
         jPanel_Duration.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Duration", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
-        jLabel_YearMonth5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth5.setFont(font_12);
         jLabel_YearMonth5.setText("Start Day:");
 
-        jTextField_StartDay.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_StartDay.setFont(font_12);
 
-        jLabel_YearMonth6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth6.setFont(font_12);
         jLabel_YearMonth6.setText("End Day:");
 
-        jTextField_EndDay.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_EndDay.setFont(font_12);
 
         javax.swing.GroupLayout jPanel_DurationLayout = new javax.swing.GroupLayout(jPanel_Duration);
         jPanel_Duration.setLayout(jPanel_DurationLayout);
@@ -279,26 +283,28 @@ public class FrmTrajMonth extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel_YearMonth7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth7.setFont(font_12);
         jLabel_YearMonth7.setText("Execute File:");
 
-        jTextField_ExcuteFile.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_ExcuteFile.setFont(font_12);
         jTextField_ExcuteFile.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jButton_ExecuteFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TSB_Open.Image.png"))); // NOI18N
+        //jButton_ExecuteFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TSB_Open.Image.png"))); // NOI18N
+        jButton_ExecuteFile.setIcon(new FlatSVGIcon("org/meteoinfo/icons/file-open.svg"));
         jButton_ExecuteFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ExecuteFileActionPerformed(evt);
             }
         });
 
-        jLabel_YearMonth8.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel_YearMonth8.setFont(font_12);
         jLabel_YearMonth8.setText("Output Path:");
 
-        jTextField_OutputPath.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField_OutputPath.setFont(font_12);
         jTextField_OutputPath.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jButton_OutPath.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TSB_Open.Image.png"))); // NOI18N
+        //jButton_OutPath.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TSB_Open.Image.png"))); // NOI18N
+        jButton_OutPath.setIcon(new FlatSVGIcon("org/meteoinfo/icons/file-open.svg"));
         jButton_OutPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_OutPathActionPerformed(evt);
@@ -307,7 +313,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
 
         jSeparator1.setForeground(new java.awt.Color(255, 51, 51));
 
-        jButton_LoadConfig.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_LoadConfig.setFont(font_12);
         jButton_LoadConfig.setText("Load Config");
         jButton_LoadConfig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,7 +321,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jButton_SaveConfig.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_SaveConfig.setFont(font_12);
         jButton_SaveConfig.setText("Save Config");
         jButton_SaveConfig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,7 +329,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jButton_Calculate.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_Calculate.setFont(font_12);
         jButton_Calculate.setText("Calculate");
         jButton_Calculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,7 +337,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jButton_Convert.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_Convert.setFont(font_12);
         jButton_Convert.setText("Convert");
         jButton_Convert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,7 +345,7 @@ public class FrmTrajMonth extends javax.swing.JDialog {
             }
         });
 
-        jButton_Combine.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton_Combine.setFont(font_12);
         jButton_Combine.setText("Combine");
         jButton_Combine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
