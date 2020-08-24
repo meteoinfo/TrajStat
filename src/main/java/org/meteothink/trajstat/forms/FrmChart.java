@@ -13,64 +13,37 @@
  */
 package org.meteothink.trajstat.forms;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.meteoinfo.chart.Chart;
-import org.meteoinfo.chart.ChartLegend;
-import org.meteoinfo.chart.ChartPanel;
-import org.meteoinfo.chart.ChartText;
-import org.meteoinfo.chart.MouseMode;
-import org.meteoinfo.chart.plot.GraphicFactory;
-import org.meteoinfo.chart.plot.Plot2D;
-import org.meteoinfo.chart.plot.Plot3D;
-import org.meteoinfo.chart.plot.XAlign;
-import org.meteoinfo.chart.plot.YAlign;
+import org.meteoinfo.chart.*;
+import org.meteoinfo.chart.plot.*;
 import org.meteoinfo.global.Extent3D;
 import org.meteoinfo.global.event.IShapeSelectedListener;
 import org.meteoinfo.global.event.ShapeSelectedEvent;
+import org.meteoinfo.image.svg.SVGUtil;
 import org.meteoinfo.layer.ImageLayer;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.ColorBreak;
-import org.meteoinfo.legend.GroupNode;
-import org.meteoinfo.legend.LayerNode;
-import org.meteoinfo.legend.LegendManage;
-import org.meteoinfo.legend.LegendScheme;
-import org.meteoinfo.legend.LegendType;
-import org.meteoinfo.legend.PointBreak;
-import org.meteoinfo.legend.PointStyle;
-import org.meteoinfo.legend.PolylineBreak;
+import org.meteoinfo.legend.*;
 import org.meteoinfo.map.MouseTools;
-import org.meteoinfo.plugin.IApplication;
-import org.meteoinfo.projection.info.ProjectionInfo;
-import org.meteoinfo.shape.Graphic;
-import org.meteoinfo.shape.GraphicCollection;
-import org.meteoinfo.shape.PointZ;
-import org.meteoinfo.shape.Polyline;
-import org.meteoinfo.shape.PolylineZShape;
-import org.meteoinfo.shape.ShapeTypes;
 import org.meteoinfo.ndarray.Array;
 import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.image.svg.SVGUtil;
+import org.meteoinfo.plugin.IApplication;
+import org.meteoinfo.projection.info.ProjectionInfo;
+import org.meteoinfo.shape.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
