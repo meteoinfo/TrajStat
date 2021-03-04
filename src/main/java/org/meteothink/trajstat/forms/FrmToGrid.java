@@ -7,8 +7,8 @@ package org.meteothink.trajstat.forms;
 
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.mapdata.Field;
-import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.global.PointD;
+import org.meteoinfo.common.GenericFileFilter;
+import org.meteoinfo.common.PointD;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.GroupNode;
 import org.meteoinfo.legend.LayerNode;

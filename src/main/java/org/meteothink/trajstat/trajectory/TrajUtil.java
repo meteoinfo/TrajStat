@@ -28,11 +28,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import java.time.format.DateTimeFormatter;
 
+import org.meteoinfo.geoprocess.GeometryUtil;
 import org.meteoinfo.geoprocess.analysis.DistanceType;
-import org.meteoinfo.global.MIMath;
-import org.meteoinfo.global.PointD;
+import org.meteoinfo.common.MIMath;
+import org.meteoinfo.common.PointD;
 import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.global.util.GlobalUtil;
+import org.meteoinfo.common.util.GlobalUtil;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.LegendManage;
@@ -456,7 +457,7 @@ public class TrajUtil {
                     PolylineZShape aPolylineZ = new PolylineZShape();
                     aPolylineZ.setPoints(pList);
                     aPolylineZ.setValue(0);
-                    aPolylineZ.setExtent(MIMath.getPointsExtent(pList));
+                    aPolylineZ.setExtent(GeometryUtil.getPointsExtent(pList));
                     int shapeNum = aLayer.getShapeNum();
                     if (aLayer.editInsertShape(aPolylineZ, shapeNum)) {
                         aLayer.editCellValue("ID", shapeNum, shapeNum + 1);
@@ -500,7 +501,7 @@ public class TrajUtil {
             PolylineZShape aPolylineZ = new PolylineZShape();
             aPolylineZ.setPoints(pList);
             aPolylineZ.setValue(0);
-            aPolylineZ.setExtent(MIMath.getPointsExtent(pList));
+            aPolylineZ.setExtent(GeometryUtil.getPointsExtent(pList));
             int shapeNum = aLayer.getShapeNum();
             if (aLayer.editInsertShape(aPolylineZ, shapeNum)) {
                 aLayer.editCellValue("ID", shapeNum, shapeNum + 1);

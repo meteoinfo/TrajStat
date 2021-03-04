@@ -3,13 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.meteothink</groupId>
     <artifactId>TrajStat</artifactId>
-    <version>1.5</version>
+    <version>1.5.1</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>MeteoInfoLib</artifactId>
-            <version>2.3</version>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>meteoinfo-common</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
     <properties>

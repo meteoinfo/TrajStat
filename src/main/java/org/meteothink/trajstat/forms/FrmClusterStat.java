@@ -25,7 +25,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import org.meteoinfo.data.mapdata.Field;
-import org.meteoinfo.global.MIMath;
+import org.meteoinfo.common.MIMath;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.GroupNode;
 import org.meteoinfo.legend.LayerNode;

@@ -29,7 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import org.meteoinfo.global.GenericFileFilter;
+import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.GroupNode;

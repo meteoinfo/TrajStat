@@ -13,9 +13,25 @@
  */
 package org.meteothink.trajstat;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Desktop;
+import org.meteoinfo.common.GenericFileFilter;
+import org.meteoinfo.common.util.GlobalUtil;
+import org.meteoinfo.data.mapdata.Field;
+import org.meteoinfo.geoprocess.GeometryUtil;
+import org.meteoinfo.layer.LayerDrawType;
+import org.meteoinfo.layer.VectorLayer;
+import org.meteoinfo.legend.*;
+import org.meteoinfo.ndarray.DataType;
+import org.meteoinfo.plugin.IApplication;
+import org.meteoinfo.plugin.PluginBase;
+import org.meteoinfo.shape.PointZ;
+import org.meteoinfo.shape.PolylineZShape;
+import org.meteoinfo.shape.ShapeTypes;
+import org.meteoinfo.ui.CheckBoxListEntry;
+import org.meteothink.trajstat.forms.*;
+import org.meteothink.trajstat.trajectory.TrajUtil;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,46 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
-import org.meteoinfo.data.mapdata.Field;
-import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.global.MIMath;
-import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.ui.CheckBoxListEntry;
-import org.meteoinfo.global.util.GlobalUtil;
-import org.meteoinfo.layer.LayerDrawType;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.FrmLegendSet;
-import org.meteoinfo.legend.GroupNode;
-import org.meteoinfo.legend.LayerNode;
-import org.meteoinfo.legend.LegendManage;
-import org.meteoinfo.legend.LegendScheme;
-import org.meteoinfo.legend.MapFrame;
-import org.meteoinfo.plugin.IApplication;
-import org.meteoinfo.plugin.PluginBase;
-import org.meteoinfo.shape.PointZ;
-import org.meteoinfo.shape.PolylineZShape;
-import org.meteoinfo.shape.ShapeTypes;
-import org.meteothink.trajstat.forms.FrmAbout;
-import org.meteothink.trajstat.forms.FrmAddData;
-import org.meteothink.trajstat.forms.FrmCWT;
-import org.meteothink.trajstat.forms.FrmChart;
-import org.meteothink.trajstat.forms.FrmClusterCal;
-import org.meteothink.trajstat.forms.FrmClusterStat;
-import org.meteothink.trajstat.forms.FrmConvertToLine;
-import org.meteothink.trajstat.forms.FrmCreateGridLayer;
-import org.meteothink.trajstat.forms.FrmMultiSel;
-import org.meteothink.trajstat.forms.FrmPSCF;
-import org.meteothink.trajstat.forms.FrmToGrid;
-import org.meteothink.trajstat.forms.FrmTrajMonth;
-import org.meteothink.trajstat.trajectory.TrajUtil;
 
 /**
  *
@@ -83,7 +59,7 @@ public class Main extends PluginBase {
     public Main() {
         this.setName("TrajStat");
         this.setAuthor("Yaqiang Wang");
-        this.setVersion("1.5");
+        this.setVersion("1.5.1");
         this.setDescription("Trajctory statictis plugin");
         path = GlobalUtil.getAppPath(Main.class);
     }
@@ -767,7 +743,7 @@ public class Main extends PluginBase {
                         PolylineZShape lineShape = new PolylineZShape();
                         List<PointZ> points = pointList.get(i);
                         lineShape.setPoints(points);
-                        lineShape.setExtent(MIMath.getPointsExtent(points));
+                        lineShape.setExtent(GeometryUtil.getPointsExtent(points));
                         int shapeNum = trajLayer.getShapeNum();
                         if (trajLayer.editInsertShape(lineShape, shapeNum)) {
                             trajLayer.editCellValue(fieldName, shapeNum, valueList.get(i));

@@ -31,7 +31,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.meteoinfo.data.mapdata.Field;
-import org.meteoinfo.global.GenericFileFilter;
+import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.layer.VectorLayer;

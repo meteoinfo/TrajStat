@@ -15,7 +15,7 @@ package org.meteothink.trajstat.forms;
 
 import org.meteoinfo.chart.*;
 import org.meteoinfo.chart.plot.*;
-import org.meteoinfo.global.Extent3D;
+import org.meteoinfo.common.Extent3D;
 import org.meteoinfo.global.event.IShapeSelectedListener;
 import org.meteoinfo.global.event.ShapeSelectedEvent;
 import org.meteoinfo.image.svg.SVGUtil;

@@ -24,10 +24,11 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.meteoinfo.global.Extent;
-import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.global.MIMath;
-import org.meteoinfo.global.PointD;
+import org.meteoinfo.common.Extent;
+import org.meteoinfo.common.GenericFileFilter;
+import org.meteoinfo.common.MIMath;
+import org.meteoinfo.common.PointD;
+import org.meteoinfo.geoprocess.GeometryUtil;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.layer.MapLayer;
@@ -472,7 +473,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
                     pList.add(pList.get(0));
 
                     aPGS.setPoints(pList);
-                    aPGS.setExtent(MIMath.getPointsExtent(aPGS.getPoints()));
+                    aPGS.setExtent(GeometryUtil.getPointsExtent(aPGS.getPoints()));
                     int shapeNum = aLayer.getShapeNum();
                     try {
                         if (aLayer.editInsertShape(aPGS, shapeNum)) {
@@ -568,7 +569,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
                     pList.add(pList.get(0));
 
                     aPGS.setPoints(pList);
-                    aPGS.setExtent(MIMath.getPointsExtent(aPGS.getPoints()));
+                    aPGS.setExtent(GeometryUtil.getPointsExtent(aPGS.getPoints()));
                     int shapeNum = aLayer.getShapeNum();
                     try {
                         if (aLayer.editInsertShape(aPGS, shapeNum)) {
