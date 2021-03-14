@@ -13,34 +13,31 @@
  */
 package org.meteothink.trajstat.forms;
 
-import java.awt.Color;
-import java.awt.Cursor;
+import org.meteoinfo.common.Extent;
+import org.meteoinfo.common.GenericFileFilter;
+import org.meteoinfo.common.PointD;
+import org.meteoinfo.geo.layer.LayerDrawType;
+import org.meteoinfo.geo.layer.MapLayer;
+import org.meteoinfo.geo.layer.VectorLayer;
+import org.meteoinfo.geo.legend.LegendManage;
+import org.meteoinfo.geo.plugin.IApplication;
+import org.meteoinfo.geometry.geoprocess.GeometryUtil;
+import org.meteoinfo.geometry.legend.LegendScheme;
+import org.meteoinfo.geometry.shape.PolygonShape;
+import org.meteoinfo.geometry.shape.ShapeTypes;
+import org.meteoinfo.ndarray.DataType;
+import org.meteoinfo.projection.KnownCoordinateSystems;
+import org.meteoinfo.projection.ProjectionInfo;
+import org.meteothink.trajstat.Main;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import org.meteoinfo.common.Extent;
-import org.meteoinfo.common.GenericFileFilter;
-import org.meteoinfo.common.MIMath;
-import org.meteoinfo.common.PointD;
-import org.meteoinfo.geoprocess.GeometryUtil;
-import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.layer.LayerDrawType;
-import org.meteoinfo.layer.MapLayer;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.LegendManage;
-import org.meteoinfo.legend.LegendScheme;
-import org.meteoinfo.plugin.IApplication;
-import org.meteoinfo.projection.KnownCoordinateSystems;
-import org.meteoinfo.projection.info.ProjectionInfo;
-import org.meteoinfo.shape.PolygonShape;
-import org.meteoinfo.shape.ShapeTypes;
-import org.meteothink.trajstat.Main;
 
 /**
  *

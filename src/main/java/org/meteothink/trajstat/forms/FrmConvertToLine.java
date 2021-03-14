@@ -31,12 +31,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.ui.CheckBoxListEntry;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.GroupNode;
-import org.meteoinfo.legend.LayerNode;
-import org.meteoinfo.plugin.IApplication;
-import org.meteoinfo.shape.PointZ;
-import org.meteoinfo.shape.PolylineZShape;
+import org.meteoinfo.geo.layer.VectorLayer;
+import org.meteoinfo.geo.legend.GroupNode;
+import org.meteoinfo.geo.legend.LayerNode;
+import org.meteoinfo.geo.plugin.IApplication;
+import org.meteoinfo.geometry.shape.PointZ;
+import org.meteoinfo.geometry.shape.PolylineZShape;
 import org.meteothink.trajstat.Main;
 
 /**

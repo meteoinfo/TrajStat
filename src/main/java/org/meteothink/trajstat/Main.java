@@ -15,17 +15,18 @@ package org.meteothink.trajstat;
 
 import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.common.util.GlobalUtil;
-import org.meteoinfo.data.mapdata.Field;
-import org.meteoinfo.geoprocess.GeometryUtil;
-import org.meteoinfo.layer.LayerDrawType;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.*;
+import org.meteoinfo.geo.legend.*;
+import org.meteoinfo.table.Field;
+import org.meteoinfo.geometry.geoprocess.GeometryUtil;
+import org.meteoinfo.geo.layer.LayerDrawType;
+import org.meteoinfo.geo.layer.VectorLayer;
+import org.meteoinfo.geometry.legend.*;
 import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.plugin.IApplication;
-import org.meteoinfo.plugin.PluginBase;
-import org.meteoinfo.shape.PointZ;
-import org.meteoinfo.shape.PolylineZShape;
-import org.meteoinfo.shape.ShapeTypes;
+import org.meteoinfo.geo.plugin.IApplication;
+import org.meteoinfo.geo.plugin.PluginBase;
+import org.meteoinfo.geometry.shape.PointZ;
+import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteothink.trajstat.forms.*;
 import org.meteothink.trajstat.trajectory.TrajUtil;
@@ -59,7 +60,7 @@ public class Main extends PluginBase {
     public Main() {
         this.setName("TrajStat");
         this.setAuthor("Yaqiang Wang");
-        this.setVersion("1.5.1");
+        this.setVersion("1.5.2");
         this.setDescription("Trajctory statictis plugin");
         path = GlobalUtil.getAppPath(Main.class);
     }

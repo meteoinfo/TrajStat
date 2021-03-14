@@ -15,7 +15,7 @@ package org.meteothink.trajstat.forms;
 
 import javax.swing.DefaultListModel;
 import org.meteoinfo.ui.CheckBoxListEntry;
-import org.meteoinfo.plugin.IApplication;
+import org.meteoinfo.geo.plugin.IApplication;
 
 /**
  *

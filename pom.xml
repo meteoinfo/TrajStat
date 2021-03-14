@@ -8,12 +8,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>MeteoInfoLib</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>meteoinfo-common</artifactId>
+            <artifactId>meteoinfo-chart</artifactId>
             <version>3.0.0</version>
         </dependency>
     </dependencies>

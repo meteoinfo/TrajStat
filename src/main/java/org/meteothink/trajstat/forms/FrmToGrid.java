@@ -6,14 +6,14 @@
 package org.meteothink.trajstat.forms;
 
 import org.meteoinfo.data.GridData;
-import org.meteoinfo.data.mapdata.Field;
+import org.meteoinfo.table.Field;
 import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.common.PointD;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.GroupNode;
-import org.meteoinfo.legend.LayerNode;
-import org.meteoinfo.plugin.IApplication;
-import org.meteoinfo.shape.Shape;
+import org.meteoinfo.geo.layer.VectorLayer;
+import org.meteoinfo.geo.legend.GroupNode;
+import org.meteoinfo.geo.legend.LayerNode;
+import org.meteoinfo.geo.plugin.IApplication;
+import org.meteoinfo.geometry.shape.Shape;
 
 import javax.swing.*;
 import java.io.File;

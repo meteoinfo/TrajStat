@@ -13,34 +13,26 @@
  */
 package org.meteothink.trajstat.trajectory;
 
-import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.meteoinfo.common.PointD;
+import org.meteoinfo.common.util.GlobalUtil;
+import org.meteoinfo.geo.analysis.DistanceType;
+import org.meteoinfo.geo.layer.LayerDrawType;
+import org.meteoinfo.geo.layer.VectorLayer;
+import org.meteoinfo.geo.legend.LegendManage;
+import org.meteoinfo.geometry.geoprocess.GeometryUtil;
+import org.meteoinfo.geometry.legend.LegendScheme;
+import org.meteoinfo.geometry.shape.PointZ;
+import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geometry.shape.ShapeTypes;
+import org.meteoinfo.ndarray.DataType;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-import java.time.format.DateTimeFormatter;
-
-import org.meteoinfo.geoprocess.GeometryUtil;
-import org.meteoinfo.geoprocess.analysis.DistanceType;
-import org.meteoinfo.common.MIMath;
-import org.meteoinfo.common.PointD;
-import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.common.util.GlobalUtil;
-import org.meteoinfo.layer.LayerDrawType;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.LegendManage;
-import org.meteoinfo.legend.LegendScheme;
-import org.meteoinfo.shape.PointZ;
-import org.meteoinfo.shape.PolylineZShape;
-import org.meteoinfo.shape.ShapeTypes;
 
 /**
  *
