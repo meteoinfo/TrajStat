@@ -509,7 +509,7 @@ public class Main extends PluginBase {
                     shpfn = shpfn + "." + extent;
                     file = new File(shpfn);
                 }
-                VectorLayer outLayer = new VectorLayer(ShapeTypes.PolylineZ);
+                VectorLayer outLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
                 for (Field field : layers.get(0).getFields()) {
                     outLayer.editAddField(new Field(field.getColumnName(), field.getDataType()));
                 }
@@ -527,7 +527,7 @@ public class Main extends PluginBase {
 
                 if (outLayer.getShapeNum() > 0) {
                     outLayer.setLayerName(file.getName());
-                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Polyline, Color.black, 1.0f);
+                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
                     aLS.setFieldName("Year");
                     outLayer.setLegendScheme(aLS);
                     outLayer.setLayerDrawType(LayerDrawType.TrajLine);
@@ -737,7 +737,7 @@ public class Main extends PluginBase {
                 if (!shpfn.substring(shpfn.length() - extent.length()).equals(extent)) {
                     shpfn = shpfn + "." + extent;
                 }
-                VectorLayer trajLayer = new VectorLayer(ShapeTypes.PolylineZ);
+                VectorLayer trajLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
                 trajLayer.editAddField(fieldName, DataType.STRING);
                 for (i = 0; i < pointList.size(); i++) {
                     try {
@@ -756,7 +756,7 @@ public class Main extends PluginBase {
 
                 if (trajLayer.getShapeNum() > 0) {
                     trajLayer.setLayerName(file.getName());
-                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Polyline, Color.black, 1.0f);
+                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
                     aLS.setFieldName("Year");
                     trajLayer.setLegendScheme(aLS);
                     trajLayer.setLayerDrawType(LayerDrawType.TrajLine);

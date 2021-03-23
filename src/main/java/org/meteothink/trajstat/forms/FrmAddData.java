@@ -13,31 +13,24 @@
  */
 package org.meteothink.trajstat.forms;
 
-import java.awt.Cursor;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
+import org.meteoinfo.common.GenericFileFilter;
+import org.meteoinfo.geo.layer.VectorLayer;
+import org.meteoinfo.geo.legend.GroupNode;
+import org.meteoinfo.geo.legend.LayerNode;
+import org.meteoinfo.geo.plugin.IApplication;
+import org.meteoinfo.ndarray.DataType;
+import org.meteoinfo.table.Field;
+import org.meteoinfo.ui.CheckBoxListEntry;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import org.meteoinfo.table.Field;
-import org.meteoinfo.common.GenericFileFilter;
-import org.meteoinfo.ndarray.DataType;
-import org.meteoinfo.ui.CheckBoxListEntry;
-import org.meteoinfo.geo.layer.VectorLayer;
-import org.meteoinfo.geo.legend.GroupNode;
-import org.meteoinfo.geo.legend.LayerNode;
-import org.meteoinfo.geo.plugin.IApplication;
 
 /**
  *

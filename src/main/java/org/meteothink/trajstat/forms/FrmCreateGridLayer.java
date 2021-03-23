@@ -432,7 +432,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
             }
 
             int i, j;
-            VectorLayer aLayer = new VectorLayer(ShapeTypes.Polygon);
+            VectorLayer aLayer = new VectorLayer(ShapeTypes.POLYGON);
             aLayer.editAddField("ID", DataType.INT);
             aLayer.editAddField("N_Traj", DataType.INT);
             aLayer.editAddField("Nij", DataType.INT);
@@ -489,7 +489,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
 
             if (aLayer.getShapeNum() > 0) {
                 aLayer.setLayerName(file.getName());
-                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Polygon, Color.yellow, 1.0f);
+                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYGON, Color.yellow, 1.0f);
                 aLS.setFieldName("ID");
                 aLayer.setLegendScheme(aLS);
                 aLayer.setLayerDrawType(LayerDrawType.GridFill);
@@ -529,7 +529,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
             }
 
             int i, j;
-            VectorLayer aLayer = new VectorLayer(ShapeTypes.Polygon);
+            VectorLayer aLayer = new VectorLayer(ShapeTypes.POLYGON);
             aLayer.editAddField("ID", DataType.INT);
             aLayer.editAddField("N_Traj", DataType.INT);
             aLayer.editAddField("Nij", DataType.INT);
@@ -584,7 +584,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
 
             if (aLayer.getShapeNum() > 0) {
                 aLayer.setLayerName(file.getName());
-                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Polygon, Color.yellow, 1.0f);
+                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYGON, Color.yellow, 1.0f);
                 aLS.setFieldName("ID");
                 aLayer.setLegendScheme(aLS);
                 aLayer.setLayerDrawType(LayerDrawType.GridFill);

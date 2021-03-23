@@ -411,7 +411,7 @@ public class TrajUtil {
 
         sr.readLine();
 
-        VectorLayer aLayer = new VectorLayer(ShapeTypes.PolylineZ);
+        VectorLayer aLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
         aLayer.editAddField("ID", DataType.INT);
         aLayer.editAddField("Date", DataType.DATE);
         aLayer.editAddField("Year", DataType.INT);
@@ -508,7 +508,7 @@ public class TrajUtil {
 
         if (aLayer.getShapeNum() > 0) {
             aLayer.setLayerName(new File(shpFile).getName());
-            LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Polyline, Color.black, 1.0f);
+            LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
             aLS.setFieldName("Year");
             aLayer.setLegendScheme(aLS);
             aLayer.setLayerDrawType(LayerDrawType.TrajLine);

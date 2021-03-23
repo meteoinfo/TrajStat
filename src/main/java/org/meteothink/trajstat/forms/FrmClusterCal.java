@@ -617,7 +617,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
                     shpfn = shpfn + "." + extent;
                 }
 
-                VectorLayer aLayer = new VectorLayer(ShapeTypes.PolylineZ);
+                VectorLayer aLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
                 aLayer.editAddField("Cluster", DataType.STRING);
                 aLayer.editAddField("Traj_Num", DataType.INT);
                 aLayer.editAddField("Ratio", DataType.STRING);
@@ -650,7 +650,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
 
                 if (aLayer.getShapeNum() > 0) {
                     aLayer.setLayerName(file.getName());
-                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Polyline, Color.black, 1.0f);
+                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
                     aLS.setFieldName("Cluster");
                     aLayer.setLegendScheme(aLS);
                     aLayer.setLayerDrawType(LayerDrawType.TrajLine);

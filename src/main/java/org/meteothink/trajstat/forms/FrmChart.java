@@ -204,7 +204,7 @@ public class FrmChart extends JDialog {
     private void onShapeSelected() {
         VectorLayer trajLayer = (VectorLayer) app.getMapDocument().getActiveMapFrame().getMapView().getSelectedLayer();
         if (trajLayer != null) {
-            if (trajLayer.getShapeType() == ShapeTypes.PolylineZ) {
+            if (trajLayer.getShapeType() == ShapeTypes.POLYLINE_Z) {
                 this.isSingleLegend = trajLayer.getLegendScheme().getLegendType() != LegendType.UniqueValue;
                 int n = 0;
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHH");
@@ -249,7 +249,7 @@ public class FrmChart extends JDialog {
         int trajN = this.trajShapes.size();
         LegendScheme ls = null;
         if (this.isSingleLegend) {
-            ls = LegendManage.createUniqValueLegendScheme(trajN, ShapeTypes.Polyline);
+            ls = LegendManage.createUniqValueLegendScheme(trajN, ShapeTypes.POLYLINE);
             for (ColorBreak cb : ls.getLegendBreaks()) {
                 PolylineBreak plb = (PolylineBreak) cb;
                 plb.setDrawSymbol(true);
@@ -301,7 +301,7 @@ public class FrmChart extends JDialog {
         plot.getYAxis().setLabel(text);
 
         if (ls == null) {
-            ls = new LegendScheme(ShapeTypes.Polyline);
+            ls = new LegendScheme(ShapeTypes.POLYLINE);
             ls.setLegendBreaks(cbs);
         }
         ChartLegend legend = new ChartLegend(ls);
@@ -334,7 +334,7 @@ public class FrmChart extends JDialog {
         int trajN = this.trajShapes.size();
         LegendScheme ls = null;
         if (this.isSingleLegend) {
-            ls = LegendManage.createUniqValueLegendScheme(trajN, ShapeTypes.Polyline);
+            ls = LegendManage.createUniqValueLegendScheme(trajN, ShapeTypes.POLYLINE);
             for (ColorBreak cb : ls.getLegendBreaks()) {
                 PolylineBreak plb = (PolylineBreak) cb;
                 plb.setDrawSymbol(true);
@@ -422,7 +422,7 @@ public class FrmChart extends JDialog {
         plot.getZAxis().setLabel(text);
 
         if (ls == null) {
-            ls = new LegendScheme(ShapeTypes.Polyline);
+            ls = new LegendScheme(ShapeTypes.POLYLINE);
             ls.setLegendBreaks(cbs);
         }
         ChartLegend legend = new ChartLegend(ls);
