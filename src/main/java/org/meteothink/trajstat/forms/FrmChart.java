@@ -198,14 +198,14 @@ public class FrmChart extends JDialog {
 
     private void onSelTrajClick(ActionEvent e) {
         app.setCurrentTool((JButton) e.getSource());
-        app.getMapDocument().getActiveMapFrame().getMapView().setMouseTool(MouseTools.SelectFeatures_Rectangle);
+        app.getMapDocument().getActiveMapFrame().getMapView().setMouseTool(MouseTools.SELECT_FEATURES_RECTANGLE);
     }
 
     private void onShapeSelected() {
         VectorLayer trajLayer = (VectorLayer) app.getMapDocument().getActiveMapFrame().getMapView().getSelectedLayer();
         if (trajLayer != null) {
             if (trajLayer.getShapeType() == ShapeTypes.POLYLINE_Z) {
-                this.isSingleLegend = trajLayer.getLegendScheme().getLegendType() != LegendType.UniqueValue;
+                this.isSingleLegend = trajLayer.getLegendScheme().getLegendType() != LegendType.UNIQUE_VALUE;
                 int n = 0;
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHH");
                 String dhstr;
@@ -323,7 +323,7 @@ public class FrmChart extends JDialog {
         String seriesKey;
         Plot3D plot = new Plot3D();
         for (MapLayer layer : this.mLayers) {
-            if (layer.getLayerType() == LayerTypes.VectorLayer) {
+            if (layer.getLayerType() == LayerTypes.VECTOR_LAYER) {
                 GraphicCollection gcs = GraphicFactory.createGraphicsFromLayer((VectorLayer) layer, 0, 0);
                 plot.addGraphic(gcs);
             } else {
@@ -391,7 +391,7 @@ public class FrmChart extends JDialog {
             }
         }
         PointBreak pb = new PointBreak();
-        pb.setStyle(PointStyle.Star);
+        pb.setStyle(PointStyle.STAR);
         pb.setColor(Color.red);
         pb.setSize(14);
         Graphic gg = GraphicFactory.createPoints3D(sx, sy, sz, pb);

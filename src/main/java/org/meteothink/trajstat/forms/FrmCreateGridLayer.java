@@ -492,7 +492,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
                 LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYGON, Color.yellow, 1.0f);
                 aLS.setFieldName("ID");
                 aLayer.setLegendScheme(aLS);
-                aLayer.setLayerDrawType(LayerDrawType.GridFill);
+                aLayer.setLayerDrawType(LayerDrawType.GRID_FILL);
                 aLayer.setFileName(shpfn);
                 aLayer.setProjInfo(projInfo);
                 aLayer.saveFile(shpfn);
@@ -587,7 +587,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
                 LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYGON, Color.yellow, 1.0f);
                 aLS.setFieldName("ID");
                 aLayer.setLegendScheme(aLS);
-                aLayer.setLayerDrawType(LayerDrawType.GridFill);
+                aLayer.setLayerDrawType(LayerDrawType.GRID_FILL);
                 aLayer.setFileName(shpfn);
                 aLayer.setProjInfo(projInfo);
                 aLayer.saveFile(shpfn);

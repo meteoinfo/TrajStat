@@ -530,7 +530,7 @@ public class Main extends PluginBase {
                     LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
                     aLS.setFieldName("Year");
                     outLayer.setLegendScheme(aLS);
-                    outLayer.setLayerDrawType(LayerDrawType.TrajLine);
+                    outLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
                     outLayer.setFileName(shpfn);
                     outLayer.saveFile(shpfn);
                 } else {
@@ -759,7 +759,7 @@ public class Main extends PluginBase {
                     LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
                     aLS.setFieldName("Year");
                     trajLayer.setLegendScheme(aLS);
-                    trajLayer.setLayerDrawType(LayerDrawType.TrajLine);
+                    trajLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
                     trajLayer.setFileName(shpfn);
                     trajLayer.saveFile(shpfn);
                 } else {

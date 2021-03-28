@@ -653,7 +653,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
                     LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
                     aLS.setFieldName("Cluster");
                     aLayer.setLegendScheme(aLS);
-                    aLayer.setLayerDrawType(LayerDrawType.TrajLine);
+                    aLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
                     aLayer.setFileName(shpfn);
                     aLayer.saveFile(shpfn);
                 } else {

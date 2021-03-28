@@ -511,7 +511,7 @@ public class TrajUtil {
             LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
             aLS.setFieldName("Year");
             aLayer.setLegendScheme(aLS);
-            aLayer.setLayerDrawType(LayerDrawType.TrajLine);
+            aLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
             aLayer.setFileName(shpFile);
             aLayer.saveFile(shpFile);
             return aLayer;
