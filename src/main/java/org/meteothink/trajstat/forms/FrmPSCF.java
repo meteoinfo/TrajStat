@@ -33,6 +33,7 @@ import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
 import org.meteoinfo.geometry.shape.PolygonShape;
 import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geometry.shape.PointZ;
 import org.meteoinfo.ui.CheckTreeManager;
 import org.meteoinfo.ui.CheckTreeSelectionModel;
 
@@ -55,6 +56,8 @@ public class FrmPSCF extends javax.swing.JDialog {
         initComponents();
 
         app = (IApplication) parent;
+
+        this.jTextField_ThresholdHeight.setEnabled(false);
 
         //Set trajectory layers
         DefaultMutableTreeNode layersTN = new DefaultMutableTreeNode("Trajectory", true);
@@ -135,6 +138,8 @@ public class FrmPSCF extends javax.swing.JDialog {
         jButton_GetMij = new javax.swing.JButton();
         jButton_CalPSCF = new javax.swing.JButton();
         jButton_WeightPSCF = new javax.swing.JButton();
+        jCheckBox_ThresholdHeight = new javax.swing.JCheckBox();
+        jTextField_ThresholdHeight = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree_TrajLayers = new javax.swing.JTree();
         jPanel2 = new javax.swing.JPanel();
@@ -150,6 +155,7 @@ public class FrmPSCF extends javax.swing.JDialog {
         jButton_Weight = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PSCF Analysis");
 
         jLabel1.setText("PSCF Layer:");
 
@@ -197,6 +203,15 @@ public class FrmPSCF extends javax.swing.JDialog {
             }
         });
 
+        jCheckBox_ThresholdHeight.setText("Threshold height (m)");
+        jCheckBox_ThresholdHeight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_ThresholdHeightActionPerformed(evt);
+            }
+        });
+
+        jTextField_ThresholdHeight.setText("2000");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -204,13 +219,19 @@ public class FrmPSCF extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_GetNij)
-                    .addComponent(jButton_CalPSCF))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_WeightPSCF)
-                    .addComponent(jButton_GetMij))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jCheckBox_ThresholdHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_ThresholdHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_CalPSCF, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_GetNij, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_GetMij, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_WeightPSCF, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +244,11 @@ public class FrmPSCF extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_CalPSCF)
                     .addComponent(jButton_WeightPSCF))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox_ThresholdHeight)
+                    .addComponent(jTextField_ThresholdHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("colors");
@@ -282,6 +307,7 @@ public class FrmPSCF extends javax.swing.JDialog {
         jLabel7.setText("Trajectory:");
 
         jTextField_TrajNum.setText("3;1");
+        jTextField_TrajNum.setToolTipText("");
 
         jLabel8.setText("Reduce Ratio:");
 
@@ -360,7 +386,7 @@ public class FrmPSCF extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton_Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(86, 86, 86))))))
+                                .addGap(83, 83, 83))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,7 +398,7 @@ public class FrmPSCF extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(jComboBox_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -381,15 +407,15 @@ public class FrmPSCF extends javax.swing.JDialog {
                             .addComponent(jTextField_Missing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton_Weight)))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -398,14 +424,24 @@ public class FrmPSCF extends javax.swing.JDialog {
     private void jButton_GetNijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNijActionPerformed
         // TODO add your handling code here:
         double missingValue = Double.parseDouble(this.jTextField_Missing.getText());
-        this.getEndPointsInCell("Nij", 0, missingValue);
+        if (this.jCheckBox_ThresholdHeight.isSelected()) {
+            double thresholdHeight = Double.parseDouble(this.jTextField_ThresholdHeight.getText());
+            this.getEndPointsInCell("Nij", 0, missingValue, thresholdHeight);
+        } else {
+            this.getEndPointsInCell("Nij", 0, missingValue);
+        }
     }//GEN-LAST:event_jButton_GetNijActionPerformed
 
     private void jButton_GetMijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetMijActionPerformed
         // TODO add your handling code here:
         double criterion = Double.parseDouble(this.jTextField_Criterion.getText());
         double missingValue = Double.parseDouble(this.jTextField_Missing.getText());
-        this.getEndPointsInCell("Mij", criterion, missingValue);
+        if (this.jCheckBox_ThresholdHeight.isSelected()) {
+            double thresholdHeight = Double.parseDouble(this.jTextField_ThresholdHeight.getText());
+            this.getEndPointsInCell("Mij", criterion, missingValue, thresholdHeight);
+        } else {
+            this.getEndPointsInCell("Mij", criterion, missingValue);
+        }
     }//GEN-LAST:event_jButton_GetMijActionPerformed
 
     private void jButton_CalPSCFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CalPSCFActionPerformed
@@ -520,6 +556,10 @@ public class FrmPSCF extends javax.swing.JDialog {
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_WeightActionPerformed
 
+    private void jCheckBox_ThresholdHeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ThresholdHeightActionPerformed
+        this.jTextField_ThresholdHeight.setEnabled(this.jCheckBox_ThresholdHeight.isSelected());
+    }//GEN-LAST:event_jCheckBox_ThresholdHeightActionPerformed
+
     private void getEndPointsInCell(final String aType, final double aCriterion, final double aNData) {
         SwingWorker worker = new SwingWorker<String, String>() {
             @Override
@@ -628,6 +668,119 @@ public class FrmPSCF extends javax.swing.JDialog {
 
         worker.execute();
     }
+    
+    private void getEndPointsInCell(final String aType, final double aCriterion, final double aNData,
+            final double thresholdHeight) {
+        SwingWorker worker = new SwingWorker<String, String>() {
+            @Override
+            protected String doInBackground() throws Exception {
+                //---- Get PSCF Layer
+                VectorLayer PSCFLayer = (VectorLayer) FrmPSCF.this.jComboBox_PSCFLayer.getSelectedItem();
+
+                //---- Get selected layers
+                //Get selected layers
+                TreePath checkedPaths[] = checkTreeManager.getSelectionModel().getSelectionPaths();
+                if (checkedPaths == null) {
+                    JOptionPane.showMessageDialog(null, "There is no trajectory layer was selected!");
+                    return "";
+                }
+
+                List<VectorLayer> layers = new ArrayList<>();
+                for (TreePath path : checkedPaths) {
+                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+                    if (node.getChildCount() > 0) {
+                        for (int i = 0; i < node.getChildCount(); i++) {
+                            DefaultMutableTreeNode cnode = (DefaultMutableTreeNode) node.getChildAt(i);
+                            layers.add((VectorLayer) cnode.getUserObject());
+                        }
+                    } else {
+                        layers.add((VectorLayer) node.getUserObject());
+                        break;
+                    }
+                }
+
+                //---- Show progressbar
+                FrmPSCF.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                app.getProgressBar().setVisible(true);
+                app.getProgressBar().setValue(0);
+                app.getProgressBarLabel().setVisible(true);
+                app.getProgressBarLabel().setText("...");
+
+                //---- Get Nij     
+                boolean usingCriterion = false;
+                if (aType.equals("Mij")) {
+                    usingCriterion = true;
+                }
+                int[] Nijs = new int[PSCFLayer.getShapeNum()];
+                int[] TNijs = new int[PSCFLayer.getShapeNum()];
+                int i;
+                for (i = 0; i < Nijs.length; i++) {
+                    Nijs[i] = 0;
+                    TNijs[i] = 0;
+                }
+                int dataFldIdx;
+                List<Integer> cellIdx = new ArrayList<>();
+                String fieldName = FrmPSCF.this.jComboBox_Field.getSelectedItem().toString();
+                for (VectorLayer tLayer : layers) {
+                    app.getProgressBarLabel().setText(tLayer.getLayerName());
+                    dataFldIdx = tLayer.getFieldIdxByName(fieldName);
+                    double value;
+                    for (i = 0; i < tLayer.getShapeNum(); i++) {                        
+                        value = Double.parseDouble(tLayer.getCellValue(dataFldIdx, i).toString());
+                        if (MIMath.doubleEquals(value, aNData)) {
+                            continue;
+                        }
+
+                        if (usingCriterion) {
+                            if (value < aCriterion) {
+                                continue;
+                            }
+                        }
+
+                        cellIdx.clear();
+                        PolylineZShape aPLZ = (PolylineZShape) tLayer.getShapes().get(i);
+                        for (int p = 0; p < aPLZ.getPointNum(); p++) {
+                            PointZ aPoint = (PointZ) aPLZ.getPoints().get(p);
+                            if (aPoint.Z > thresholdHeight)      
+                                continue;
+                            
+                            for (int s = 0; s < PSCFLayer.getShapeNum(); s++) {                                
+                                PolygonShape aPGS = (PolygonShape) PSCFLayer.getShapes().get(s);
+                                if (GeoComputation.pointInPolygon(aPGS.getPoints(), aPoint)) {
+                                    Nijs[s] += 1;                                    
+                                    if (!cellIdx.contains(s)){
+                                        TNijs[s] += 1;
+                                        cellIdx.add(s);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        app.getProgressBar().setValue((int) ((float) (i + 1) / tLayer.getShapeNum() * 100));
+                    }
+                }
+
+                //---- Update PSCF layer                        
+                for (i = 0; i < PSCFLayer.getShapeNum(); i++) {
+                    PSCFLayer.editCellValue(aType, i, Nijs[i]);
+                    if (!usingCriterion)
+                        PSCFLayer.editCellValue("N_Traj", i, TNijs[i]);
+                }
+                PSCFLayer.getAttributeTable().save();
+
+                return "";
+            }
+
+            @Override
+            protected void done() {
+                app.getProgressBar().setVisible(false);
+                app.getProgressBarLabel().setVisible(false);
+                FrmPSCF.this.setCursor(Cursor.getDefaultCursor());
+            }
+        };
+
+        worker.execute();
+    }
 
     private void onSelectionValueChanged(TreeSelectionEvent evt) {
         this.getFileds();
@@ -680,6 +833,7 @@ public class FrmPSCF extends javax.swing.JDialog {
     private javax.swing.JButton jButton_GetNij;
     private javax.swing.JButton jButton_Weight;
     private javax.swing.JButton jButton_WeightPSCF;
+    private javax.swing.JCheckBox jCheckBox_ThresholdHeight;
     private javax.swing.JComboBox jComboBox_Field;
     private javax.swing.JComboBox jComboBox_PSCFLayer;
     private javax.swing.JLabel jLabel1;
@@ -699,6 +853,7 @@ public class FrmPSCF extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField_Missing;
     private javax.swing.JTextField jTextField_ReduceRatio;
     private javax.swing.JTextField jTextField_ReduceRatio_Traj;
+    private javax.swing.JTextField jTextField_ThresholdHeight;
     private javax.swing.JTextField jTextField_TrajNum;
     private javax.swing.JTree jTree_TrajLayers;
     // End of variables declaration//GEN-END:variables
