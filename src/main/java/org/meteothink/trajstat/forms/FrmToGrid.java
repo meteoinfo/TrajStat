@@ -169,7 +169,7 @@ public class FrmToGrid extends javax.swing.JDialog {
                 for (int j = 0; j < xn; j++) {
                     idx = (yn - i - 1) * xn + j;
                     v = (double) layer.getCellValue(fieldName, idx);
-                    gData.data[i][j] = v;
+                    gData.setValue(i, j, v);
                 }
             }
 

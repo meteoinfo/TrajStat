@@ -60,7 +60,7 @@ public class Main extends PluginBase {
     public Main() {
         this.setName("TrajStat");
         this.setAuthor("Yaqiang Wang");
-        this.setVersion("1.5.3");
+        this.setVersion("1.5.4");
         this.setDescription("Trajectory statistics plugin");
         path = GlobalUtil.getAppPath(Main.class);
     }
