@@ -40,7 +40,6 @@ import org.meteoinfo.chart.ChartPanel;
 import org.meteoinfo.chart.plot.XY1DPlot;
 import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.geo.analysis.Clustering;
-import org.meteoinfo.image.svg.SVGUtil;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;

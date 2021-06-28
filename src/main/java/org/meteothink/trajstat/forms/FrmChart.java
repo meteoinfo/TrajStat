@@ -13,6 +13,7 @@
  */
 package org.meteothink.trajstat.forms;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.meteoinfo.chart.*;
 import org.meteoinfo.chart.plot.*;
 import org.meteoinfo.common.Extent3D;
@@ -25,7 +26,6 @@ import org.meteoinfo.geometry.graphic.Graphic;
 import org.meteoinfo.geometry.graphic.GraphicCollection;
 import org.meteoinfo.ui.event.IShapeSelectedListener;
 import org.meteoinfo.ui.event.ShapeSelectedEvent;
-import org.meteoinfo.image.svg.SVGUtil;
 import org.meteoinfo.geo.layer.ImageLayer;
 import org.meteoinfo.geo.layer.LayerTypes;
 import org.meteoinfo.geo.layer.MapLayer;
@@ -125,8 +125,7 @@ public class FrmChart extends JDialog {
         ClassLoader classLoader = FrmChart.class.getClassLoader();
 
         //Tool bar
-        SVGUtil.setSVGIcon(button_Sel, "org/meteothink/trajstat/icons/select.svg", classLoader);
-        //button_Sel.setIcon(new FlatSVGIcon("org/meteothink/trajstat/icons/select.svg"));
+        button_Sel.setIcon(new FlatSVGIcon("org/meteothink/trajstat/icons/select.svg", classLoader));
         button_Sel.setToolTipText("Select Trajectory");
         button_Sel.addActionListener(new ActionListener() {
             @Override
@@ -136,8 +135,8 @@ public class FrmChart extends JDialog {
         });
         toolBar.add(button_Sel);
 
-        SVGUtil.setSVGIcon(button_Remove, "org/meteoinfo/icons/remove.svg");
-        //button_Remove.setIcon(new FlatSVGIcon("org/meteoinfo/icons/remove.svg"));
+        //SVGUtil.setSVGIcon(button_Remove, "org/meteoinfo/icons/remove.svg");
+        button_Remove.setIcon(new FlatSVGIcon("org/meteoinfo/icons/remove.svg"));
         button_Remove.setToolTipText("Remove Last Trajectory");
         button_Remove.addActionListener(new ActionListener() {
             @Override
@@ -147,8 +146,8 @@ public class FrmChart extends JDialog {
         });
         toolBar.add(button_Remove);
 
-        SVGUtil.setSVGIcon(button_RemoveAll, "org/meteoinfo/icons/delete.svg");
-        //button_RemoveAll.setIcon(new FlatSVGIcon("org/meteoinfo/icons/delete.svg"));
+        //SVGUtil.setSVGIcon(button_RemoveAll, "org/meteoinfo/icons/delete.svg");
+        button_RemoveAll.setIcon(new FlatSVGIcon("org/meteoinfo/icons/delete.svg"));
         button_RemoveAll.setToolTipText("Remove All Trajectories");
         button_RemoveAll.addActionListener(new ActionListener() {
             @Override
@@ -159,7 +158,8 @@ public class FrmChart extends JDialog {
         toolBar.add(button_RemoveAll);
         toolBar.addSeparator();
 
-        SVGUtil.setSVGIcon(button_3D, "org/meteothink/trajstat/icons/figure-3d.svg", classLoader);
+        //SVGUtil.setSVGIcon(button_3D, "org/meteothink/trajstat/icons/figure-3d.svg", classLoader);
+        button_3D.setIcon(new FlatSVGIcon("org/meteothink/trajstat/icons/figure-3d.svg", classLoader));
         button_3D.setToolTipText("3D view");
         button_3D.addChangeListener(new ChangeListener() {
             @Override
