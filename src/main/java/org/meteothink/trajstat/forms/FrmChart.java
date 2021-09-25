@@ -15,6 +15,7 @@ package org.meteothink.trajstat.forms;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.meteoinfo.chart.*;
+import org.meteoinfo.chart.graphic.GraphicFactory;
 import org.meteoinfo.chart.plot.*;
 import org.meteoinfo.common.Extent3D;
 import org.meteoinfo.common.XAlign;
