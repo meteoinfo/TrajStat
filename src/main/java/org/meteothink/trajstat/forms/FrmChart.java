@@ -323,6 +323,9 @@ public class FrmChart extends JDialog {
 
         String seriesKey;
         Plot3D plot = new Plot3D();
+        plot.getGridLine().setDrawXLine(true);
+        plot.getGridLine().setDrawYLine(true);
+        plot.getGridLine().setDrawZLine(true);
         for (MapLayer layer : this.mLayers) {
             if (layer.getLayerType() == LayerTypes.VECTOR_LAYER) {
                 GraphicCollection gcs = GraphicFactory.createGraphicsFromLayer((VectorLayer) layer, 0, 0);
