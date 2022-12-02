@@ -25,6 +25,7 @@ import org.meteoinfo.geometry.shape.PointZ;
 import org.meteoinfo.geometry.shape.PolylineZShape;
 import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ndarray.DataType;
+import org.meteoinfo.table.Field;
 
 import javax.swing.*;
 import java.awt.*;
@@ -717,5 +718,161 @@ public class TrajUtil {
         dist = dist / n;
 
         return dist;
+    }
+
+    /**
+     * Get time zone integer from a time zone string, for example: GMT+8
+     * @param timeZoneStr The time zone string
+     * @return Time zone integer
+     */
+    public static int getTimeZone(String timeZoneStr){
+        int tz;
+        timeZoneStr = timeZoneStr.trim();
+        String str = timeZoneStr.substring(3);
+        if (str.charAt(0) == '+')
+            str = str.substring(1);
+
+        tz = Integer.parseInt(str);
+
+        return tz;
+    }
+
+    /**
+     * Add data to trajectory layers
+     * @param dataFile The data file
+     * @param sDateFldIdx Start date field index
+     * @param formatStr Date time format string
+     * @param timeZone Time zone
+     * @param dataFldIdx Data field index
+     * @param undef Undef value
+     * @param layers Trajectory layers
+     * @param fldName Data field name
+     * @param dataType Data type
+     * @param fLen Data field length
+     * @param fDec Data field decimal number
+     * @throws IOException
+     */
+    public static void addDataToTraj(File dataFile, int sDateFldIdx, String formatStr, int timeZone,
+                                     int dataFldIdx, double undef, List<VectorLayer> layers, String fldName,
+                                     DataType dataType, int fLen, int fDec) throws IOException {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(formatStr);
+
+        //Read data file
+        List<String[]> dataList = new ArrayList<>();
+        BufferedReader sr = new BufferedReader(new FileReader(dataFile));
+        String aDataStr;
+        String[] aDataArray;
+        sr.readLine();
+        aDataStr = sr.readLine();
+        while (aDataStr != null) {
+            aDataArray = aDataStr.split(",");
+            if (aDataArray.length > Math.max(sDateFldIdx, dataFldIdx)) {
+                String[] theData = new String[2];
+                theData[0] = aDataArray[sDateFldIdx];
+                theData[1] = aDataArray[dataFldIdx];
+                dataList.add(theData);
+            }
+            aDataStr = sr.readLine();
+        }
+        sr.close();
+        int N = dataList.size();
+
+        //Add data to trajectory layers
+        int sNum;
+        int CFldIdx;
+        int j;
+        int dateIdx;
+        String aDateStr;
+        int aYear;
+        int aMonth;
+        int aDay;
+        int aHour;
+        Object value;
+        LocalDateTime dt;
+        for (VectorLayer layer : layers) {
+            CFldIdx = layer.getFieldIdxByName(fldName);
+            if (CFldIdx == -1) {
+                Field fld = new Field(fldName, dataType, fLen, fDec);
+                layer.editAddField(fld);
+                CFldIdx = layer.getFieldNumber() - 1;
+            }
+            sNum = layer.getShapeNum();
+            dateIdx = layer.getFieldIdxByName("Date");
+            if (dateIdx > -1) {
+                for (int i = 0; i < sNum; i++) {
+                    dt = (LocalDateTime) layer.getCellValue("Date", i);
+                    int hour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
+                    dt = dt.withHour(hour);
+                    dt = dt.plusHours(timeZone);
+                    aDateStr = format.format(dt);
+                    value = undef;
+                    switch (dataType) {
+                        case INT:
+                            value = (int) undef;
+                            break;
+                        case STRING:
+                            value = "Null";
+                            break;
+                    }
+                    layer.editCellValue(CFldIdx, i, value);
+                    int tlen;
+                    String dstr;
+                    for (j = 0; j < N; j++) {
+                        tlen = dataList.get(j)[0].length();
+                        if (tlen <= aDateStr.length())
+                            dstr = aDateStr.substring(0, tlen);
+                        else
+                            dstr = aDateStr;
+                        if (dstr.equals(dataList.get(j)[0])) {
+                            String dStr = dataList.get(j)[1];
+                            value = dStr;
+                            switch (dataType) {
+                                case INT:
+                                    if (dStr.isEmpty()) {
+                                        value = (int) undef;
+                                    } else {
+                                        value = Integer.parseInt(dStr);
+                                    }
+                                    break;
+                                case DOUBLE:
+                                    if (dStr.isEmpty()) {
+                                        value = undef;
+                                    } else {
+                                        value = Double.parseDouble(dStr);
+                                    }
+                                    break;
+                            }
+                            layer.editCellValue(CFldIdx, i, value);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < sNum; i++) {
+                    aYear = Integer.parseInt(layer.getCellValue("Year", i).toString());
+                    aMonth = Integer.parseInt(layer.getCellValue("Month", i).toString());
+                    aDay = Integer.parseInt(layer.getCellValue("Day", i).toString());
+                    aHour = Integer.parseInt(layer.getCellValue("Hour", i).toString());
+                    dt = LocalDateTime.of(aYear, aMonth, dateIdx, aDay, aHour);
+                    dt = dt.plusHours(timeZone);
+                    aDateStr = format.format(dt);
+                    int tlen;
+                    String dstr;
+                    for (j = 0; j <= N - 1; j++) {
+                        tlen = dataList.get(j)[0].length();
+                        if (tlen <= aDateStr.length())
+                            dstr = aDateStr.substring(0, tlen);
+                        else
+                            dstr = aDateStr;
+                        if (dstr.equals(dataList.get(j)[0])) {
+                            layer.editCellValue(CFldIdx, i, dataList.get(j)[1]);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            layer.getAttributeTable().save();
+        }
     }
 }

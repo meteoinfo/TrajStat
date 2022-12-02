@@ -771,10 +771,10 @@ public class FrmAddData extends javax.swing.JDialog {
     }
     
     private int getTimeZone(String timeZoneStr){
-        int tz = 0;
+        int tz;
         timeZoneStr = timeZoneStr.trim();
         String str = timeZoneStr.substring(3);
-        if (str.substring(0, 1).equals("+"))
+        if (str.charAt(0) == '+')
             str = str.substring(1);
         
         tz = Integer.parseInt(str);

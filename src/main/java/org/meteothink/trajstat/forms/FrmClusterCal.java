@@ -875,7 +875,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
                 for (int j = 0; j < layer.getShapeNum(); j++) {
                     PolylineZShape shape = (PolylineZShape) layer.getShapes().get(j);
                     date = (LocalDateTime) layer.getCellValue("Date", j);
-                    hour = (int)layer.getCellValue("Hour", j);
+                    hour = Integer.parseInt(layer.getCellValue("Hour", j).toString());
                     date = date.withHour(hour);
                     tDates.add(date);
                     pointNum = shape.getPointNum();
