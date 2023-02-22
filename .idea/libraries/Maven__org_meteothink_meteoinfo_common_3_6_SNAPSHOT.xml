@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.meteothink:meteoinfo-common:3.6-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/meteothink/meteoinfo-common/3.6-SNAPSHOT/meteoinfo-common-3.6-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/meteothink/meteoinfo-common/3.6-SNAPSHOT/meteoinfo-common-3.6-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/meteothink/meteoinfo-common/3.6-SNAPSHOT/meteoinfo-common-3.6-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
