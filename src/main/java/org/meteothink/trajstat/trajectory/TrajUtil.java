@@ -13,16 +13,16 @@
  */
 package org.meteothink.trajstat.trajectory;
 
-import org.meteoinfo.common.PointD;
+import org.meteoinfo.common.PointZ;
 import org.meteoinfo.common.util.GlobalUtil;
 import org.meteoinfo.geo.analysis.DistanceType;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.LegendManage;
+import org.meteoinfo.geo.mapdata.ShapeFileType;
 import org.meteoinfo.geometry.geoprocess.GeometryUtil;
 import org.meteoinfo.geometry.legend.LegendScheme;
-import org.meteoinfo.geometry.shape.PointZ;
-import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.table.Field;
@@ -412,7 +412,7 @@ public class TrajUtil {
 
         sr.readLine();
 
-        VectorLayer aLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
+        VectorLayer aLayer = new VectorLayer(ShapeFileType.POLYLINE_Z);
         aLayer.editAddField("ID", DataType.INT);
         aLayer.editAddField("Date", DataType.DATE);
         aLayer.editAddField("Year", DataType.INT);
@@ -447,7 +447,7 @@ public class TrajUtil {
 
             if (ageHour.equals("0.0")) {
                 if (i > 0 && pList.size() > 1) {
-                    PolylineZShape aPolylineZ = new PolylineZShape();
+                    PolylineShape aPolylineZ = new PolylineShape();
                     aPolylineZ.setPoints(pList);
                     aPolylineZ.setValue(0);
                     aPolylineZ.setExtent(GeometryUtil.getPointsExtent(pList));
@@ -491,7 +491,7 @@ public class TrajUtil {
         sr.close();
 
         if (i > 1 && pList.size() > 0) {
-            PolylineZShape aPolylineZ = new PolylineZShape();
+            PolylineShape aPolylineZ = new PolylineShape();
             aPolylineZ.setPoints(pList);
             aPolylineZ.setValue(0);
             aPolylineZ.setExtent(GeometryUtil.getPointsExtent(pList));
@@ -576,7 +576,7 @@ public class TrajUtil {
         i = 0;
         for (VectorLayer layer : layers) {
             for (int s = 0; s < layer.getShapeNum(); s++) {
-                PolylineZShape shape = (PolylineZShape) layer.getShapes().get(s);
+                PolylineShape shape = (PolylineShape) layer.getShapes().get(s);
                 if (shape.getPointNum() != pointNum) {
                     continue;
                 }
@@ -630,7 +630,7 @@ public class TrajUtil {
         i = 0;
         for (VectorLayer layer : layers) {
             for (int s = 0; s < layer.getShapeNum(); s++) {
-                PolylineZShape shape = (PolylineZShape) layer.getShapes().get(s);
+                PolylineShape shape = (PolylineShape) layer.getShapes().get(s);
                 if (shape.getPointNum() != pointNum) {
                     continue;
                 }
@@ -638,16 +638,16 @@ public class TrajUtil {
                 cluster = clusters.get(i);
                 double dist;
                 int m = 0;
-                PointD[] trajA = new PointD[pointNum];
-                PointD[] trajB = new PointD[pointNum];
+                PointZ[] trajA = new PointZ[pointNum];
+                PointZ[] trajB = new PointZ[pointNum];
                 for (j = 0; j < pointNum; j++) {
                     PointZ point = (PointZ) shape.getPoints().get(j);
-                    trajA[j] = new PointD(point.X, point.Y);                    
+                    trajA[j] = new PointZ(point.X, point.Y);
                     y = trajDataArray[cluster - 1][m];
                     m += 1;
                     x = trajDataArray[cluster - 1][m];
                     m += 2;
-                    trajB[j] = new PointD(x, y);                    
+                    trajB[j] = new PointZ(x, y);
                 }
                 if (disType == DistanceType.EUCLIDEAN)
                     dist = calDistance_Euclidean(trajA, trajB);
@@ -667,10 +667,10 @@ public class TrajUtil {
      * @param trajB Trajectory B
      * @return Euclidean distance
      */
-    public static double calDistance_Euclidean(PointD[] trajA, PointD[] trajB) {
+    public static double calDistance_Euclidean(PointZ[] trajA, PointZ[] trajB) {
         double dist = 0.0;
         int n = trajA.length;
-        PointD pA, pB;
+        PointZ pA, pB;
         for (int j = 0; j < n; j++) {
             pA = trajA[j];
             pB = trajB[j];
@@ -687,11 +687,11 @@ public class TrajUtil {
      * @param trajB Trajectory B
      * @return Angle distance
      */
-    public static double calDistance_Angle(PointD[] trajA, PointD[] trajB) {
+    public static double calDistance_Angle(PointZ[] trajA, PointZ[] trajB) {
         double dist = 0.0;
         double angle;
         int n = trajA.length;
-        PointD pA, pB;
+        PointZ pA, pB;
         double A, B, C;
         double X0 = trajA[0].X;
         double Y0 = trajB[0].Y;

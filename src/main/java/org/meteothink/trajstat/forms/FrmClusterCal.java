@@ -40,12 +40,13 @@ import org.meteoinfo.chart.ChartPanel;
 import org.meteoinfo.chart.plot.XY1DPlot;
 import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.geo.analysis.Clustering;
+import org.meteoinfo.geo.mapdata.ShapeFileType;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.geo.analysis.DistanceType;
 import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.ndarray.DataType;
@@ -53,7 +54,7 @@ import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geometry.legend.LegendScheme;
 import org.meteoinfo.geometry.legend.PolylineBreak;
-import org.meteoinfo.geometry.shape.PointZ;
+import org.meteoinfo.common.PointZ;
 import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteothink.trajstat.Main;
 import org.meteothink.trajstat.trajectory.TrajUtil;
@@ -464,7 +465,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
             if (((CheckBoxListEntry) listModel.get(i)).isSelected()) {
                 VectorLayer layer = (VectorLayer) ((CheckBoxListEntry) listModel.get(i)).getValue();
                 if (n == 0) {
-                    PolylineZShape shape = (PolylineZShape) layer.getShapes().get(0);
+                    PolylineShape shape = (PolylineShape) layer.getShapes().get(0);
                     pointNum = shape.getPointNum();
                 }
                 trajNum += layer.getShapeNum();
@@ -581,7 +582,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
             int totalTrajNum = 0;
             for (VectorLayer layer : layers) {
                 for (int s = 0; s < layer.getShapeNum(); s++) {
-                    PolylineZShape shape = (PolylineZShape) layer.getShapes().get(s);
+                    PolylineShape shape = (PolylineShape) layer.getShapes().get(s);
                     if (shape.getPointNum() != pointNum) {
                         continue;
                     }
@@ -589,7 +590,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
                     aLine = src.readLine();
                     Cluster = Integer.parseInt(aLine.split(",")[CLev]);
                     for (j = 0; j < pointNum; j++) {
-                        PointZ point = (PointZ) shape.getPoints().get(j);
+                        PointZ point = shape.getPoints().get(j);
                         trajDataArray[Cluster - 1][j][0] += point.Y;
                         trajDataArray[Cluster - 1][j][1] += point.X;
                         trajDataArray[Cluster - 1][j][2] += point.Z;
@@ -631,14 +632,14 @@ public class FrmClusterCal extends javax.swing.JDialog {
                     shpfn = shpfn + "." + extent;
                 }
 
-                VectorLayer aLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
+                VectorLayer aLayer = new VectorLayer(ShapeFileType.POLYLINE_Z);
                 aLayer.editAddField("Cluster", DataType.STRING);
                 aLayer.editAddField("Traj_Num", DataType.INT);
                 aLayer.editAddField("Ratio", DataType.STRING);
 
                 for (i = 0; i < CLev; i++) {
                     try {
-                        PolylineZShape aPLZ = new PolylineZShape();
+                        PolylineShape aPLZ = new PolylineShape();
                         List<PointZ> points = new ArrayList<>();
                         for (j = 0; j < pointNum; j++) {
                             PointZ pt = new PointZ();
@@ -873,7 +874,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
             if (((CheckBoxListEntry) listModel.get(i)).isSelected()) {
                 VectorLayer layer = (VectorLayer) ((CheckBoxListEntry) listModel.get(i)).getValue();                
                 for (int j = 0; j < layer.getShapeNum(); j++) {
-                    PolylineZShape shape = (PolylineZShape) layer.getShapes().get(j);
+                    PolylineShape shape = (PolylineShape) layer.getShapes().get(j);
                     date = (LocalDateTime) layer.getCellValue("Date", j);
                     hour = Integer.parseInt(layer.getCellValue("Hour", j).toString());
                     date = date.withHour(hour);

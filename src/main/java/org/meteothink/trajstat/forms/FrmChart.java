@@ -17,15 +17,17 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.meteoinfo.chart.*;
 import org.meteoinfo.chart.graphic.GraphicFactory;
 import org.meteoinfo.chart.plot.*;
-import org.meteoinfo.common.Extent3D;
+import org.meteoinfo.common.Extent;
+import org.meteoinfo.common.PointZ;
 import org.meteoinfo.common.XAlign;
 import org.meteoinfo.common.YAlign;
 import org.meteoinfo.geo.io.GraphicUtil;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.legend.LegendManage;
-import org.meteoinfo.geometry.graphic.Graphic;
-import org.meteoinfo.geometry.graphic.GraphicCollection;
+import org.meteoinfo.chart.graphic.Graphic;
+import org.meteoinfo.chart.graphic.GraphicCollection;
+import org.meteoinfo.geo.mapdata.ShapeFileType;
 import org.meteoinfo.ui.event.IShapeSelectedListener;
 import org.meteoinfo.ui.event.ShapeSelectedEvent;
 import org.meteoinfo.geo.layer.ImageLayer;
@@ -206,7 +208,7 @@ public class FrmChart extends JDialog {
     private void onShapeSelected() {
         VectorLayer trajLayer = (VectorLayer) app.getMapDocument().getActiveMapFrame().getMapView().getSelectedLayer();
         if (trajLayer != null) {
-            if (trajLayer.getShapeType() == ShapeTypes.POLYLINE_Z) {
+            if (trajLayer.getShapeType() == ShapeFileType.POLYLINE_Z) {
                 this.isSingleLegend = trajLayer.getLegendScheme().getLegendType() != LegendType.UNIQUE_VALUE;
                 int n = 0;
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHH");
@@ -226,7 +228,7 @@ public class FrmChart extends JDialog {
                             this.dateHeight.add(dhstr);
                         }
 
-                        PolylineZShape aPLZ = (PolylineZShape) trajLayer.getShapes().get(i);
+                        PolylineShape aPLZ = (PolylineShape) trajLayer.getShapes().get(i);
                         ColorBreak cb = trajLayer.getLegendScheme().getLegendBreaks().get(aPLZ.getLegendIndex());
                         trajShapes.add(new Object[]{aPLZ, cb});
                         n += 1;
@@ -261,7 +263,7 @@ public class FrmChart extends JDialog {
         }
         List<ColorBreak> cbs = new ArrayList<>();
         for (int i = 0; i < trajN; i++) {
-            PolylineZShape shape = (PolylineZShape) this.trajShapes.get(i)[0];
+            PolylineShape shape = (PolylineShape) this.trajShapes.get(i)[0];
             if (!this.dateHeight.isEmpty() && this.dateHeight.size() > i) {
                 seriesKey = this.dateHeight.get(i);
             } else {
@@ -272,7 +274,7 @@ public class FrmChart extends JDialog {
             Array ydata = Array.factory(DataType.DOUBLE, new int[]{n});
             for (int j = 0; j < n; j++) {
                 xdata.setDouble(j, j);
-                ydata.setDouble(j, ((PointZ) shape.getPoints().get(j)).M);
+                ydata.setDouble(j, (shape.getPoints().get(j)).M);
             }
             ColorBreak cb;
             if (ls == null) {
@@ -348,14 +350,14 @@ public class FrmChart extends JDialog {
             }
         }
         PointZ pz;
-        Extent3D extent = new Extent3D();
+        Extent extent = new Extent();
         List<ColorBreak> cbs = new ArrayList<>();
         int idx = 0;
         Array sx = Array.factory(DataType.DOUBLE, new int[]{trajN});
         Array sy = Array.factory(DataType.DOUBLE, new int[]{trajN});
         Array sz = Array.factory(DataType.DOUBLE, new int[]{trajN});
         for (int i = 0; i < trajN; i++) {
-            PolylineZShape shape = (PolylineZShape) this.trajShapes.get(i)[0];
+            PolylineShape shape = (PolylineShape) this.trajShapes.get(i)[0];
             if (this.dateHeight.size() > 0 && this.dateHeight.size() > i) {
                 seriesKey = this.dateHeight.get(i);
             } else {
@@ -388,9 +390,9 @@ public class FrmChart extends JDialog {
                 Graphic gg = GraphicFactory.createLineString3D(xdata, ydata, zdata, cb);
                 plot.addGraphic(gg);
                 if (idx == 0) {
-                    extent = (Extent3D) gg.getExtent();
+                    extent = gg.getExtent();
                 } else {
-                    extent = extent.union((Extent3D) gg.getExtent());
+                    extent = extent.union(gg.getExtent());
                 }
                 idx += 1;
             }

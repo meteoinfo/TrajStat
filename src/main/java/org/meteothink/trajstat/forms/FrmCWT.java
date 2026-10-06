@@ -26,13 +26,13 @@ import javax.swing.tree.TreePath;
 import org.meteoinfo.table.Field;
 import org.meteoinfo.geometry.geoprocess.GeoComputation;
 import org.meteoinfo.common.MIMath;
-import org.meteoinfo.common.PointD;
+import org.meteoinfo.common.PointZ;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
 import org.meteoinfo.geometry.shape.PolygonShape;
-import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.ui.CheckTreeManager;
 import org.meteoinfo.ui.CheckTreeSelectionModel;
 
@@ -444,9 +444,9 @@ public class FrmCWT extends javax.swing.JDialog {
                             continue;
                         }
 
-                        PolylineZShape aPLZ = (PolylineZShape) tLayer.getShapes().get(i);
+                        PolylineShape aPLZ = (PolylineShape) tLayer.getShapes().get(i);
                         for (int p = 0; p < aPLZ.getPointNum(); p++) {
-                            PointD aPoint = new PointD(aPLZ.getPoints().get(p).X, aPLZ.getPoints().get(p).Y);
+                            PointZ aPoint = new PointZ(aPLZ.getPoints().get(p).X, aPLZ.getPoints().get(p).Y);
                             for (int s = 0; s < CWTLayer.getShapeNum(); s++) {
                                 PolygonShape aPGS = (PolygonShape) CWTLayer.getShapes().get(s);
                                 if (GeoComputation.pointInPolygon(aPGS.getPoints(), aPoint)) {
@@ -635,9 +635,9 @@ public class FrmCWT extends javax.swing.JDialog {
                         }
 
                         cellIdx.clear();
-                        PolylineZShape aPLZ = (PolylineZShape) tLayer.getShapes().get(i);
+                        PolylineShape aPLZ = (PolylineShape) tLayer.getShapes().get(i);
                         for (int p = 0; p < aPLZ.getPointNum(); p++) {
-                            PointD aPoint = new PointD(aPLZ.getPoints().get(p).X, aPLZ.getPoints().get(p).Y);
+                            PointZ aPoint = new PointZ(aPLZ.getPoints().get(p).X, aPLZ.getPoints().get(p).Y);
                             for (int s = 0; s < PSCFLayer.getShapeNum(); s++) {
                                 PolygonShape aPGS = (PolygonShape) PSCFLayer.getShapes().get(s);
                                 if (GeoComputation.pointInPolygon(aPGS.getPoints(), aPoint)) {

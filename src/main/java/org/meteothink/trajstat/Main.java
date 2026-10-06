@@ -25,8 +25,9 @@ import org.meteoinfo.geometry.legend.*;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.geo.plugin.IApplication;
 import org.meteoinfo.geo.plugin.PluginBase;
-import org.meteoinfo.geometry.shape.PointZ;
-import org.meteoinfo.geometry.shape.PolylineZShape;
+import org.meteoinfo.geo.mapdata.ShapeFileType;
+import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteothink.trajstat.forms.*;
@@ -61,7 +62,7 @@ public class Main extends PluginBase {
     public Main() {
         this.setName("TrajStat");
         this.setAuthor("Yaqiang Wang");
-        this.setVersion("1.5.6");
+        this.setVersion("1.5.7");
         this.setDescription("Trajectory statistics plugin");
         path = GlobalUtil.getAppPath(Main.class);
     }
@@ -510,7 +511,7 @@ public class Main extends PluginBase {
                     shpfn = shpfn + "." + extent;
                     file = new File(shpfn);
                 }
-                VectorLayer outLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
+                VectorLayer outLayer = new VectorLayer(ShapeFileType.POLYLINE_Z);
                 for (Field field : layers.get(0).getFields()) {
                     outLayer.editAddField(new Field(field.getColumnName(), field.getDataType()));
                 }
@@ -738,11 +739,11 @@ public class Main extends PluginBase {
                 if (!shpfn.substring(shpfn.length() - extent.length()).equals(extent)) {
                     shpfn = shpfn + "." + extent;
                 }
-                VectorLayer trajLayer = new VectorLayer(ShapeTypes.POLYLINE_Z);
+                VectorLayer trajLayer = new VectorLayer(ShapeFileType.POLYLINE_Z);
                 trajLayer.editAddField(fieldName, DataType.STRING);
                 for (i = 0; i < pointList.size(); i++) {
                     try {
-                        PolylineZShape lineShape = new PolylineZShape();
+                        PolylineShape lineShape = new PolylineShape();
                         List<PointZ> points = pointList.get(i);
                         lineShape.setPoints(points);
                         lineShape.setExtent(GeometryUtil.getPointsExtent(points));

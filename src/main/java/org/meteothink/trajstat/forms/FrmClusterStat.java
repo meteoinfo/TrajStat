@@ -76,7 +76,7 @@ public class FrmClusterStat extends javax.swing.JDialog {
 
     private void getFileds() {
         // to get the paths that were checked
-        TreePath checkedPaths[] = checkTreeManager.getSelectionModel().getSelectionPaths();
+        TreePath[] checkedPaths = checkTreeManager.getSelectionModel().getSelectionPaths();
         if (checkedPaths == null) {
             return;
         }
@@ -248,7 +248,7 @@ public class FrmClusterStat extends javax.swing.JDialog {
     private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
         // TODO add your handling code here:
         //Get selected layers
-        TreePath checkedPaths[] = checkTreeManager.getSelectionModel().getSelectionPaths();
+        TreePath[] checkedPaths = checkTreeManager.getSelectionModel().getSelectionPaths();
         if (checkedPaths == null) {
             JOptionPane.showMessageDialog(null, "There is no trajectory layer was selected!");
             return;

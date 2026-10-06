@@ -19,7 +19,7 @@ public class AddDataTest {
     @Test
     public void testGetTimeZone() {
         int tz = TrajUtil.getTimeZone("GMT+4");
-        Assertions.assertEquals(tz, 4);
+        Assertions.assertEquals(4, tz);
     }
 
     @Test
