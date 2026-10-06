@@ -26,7 +26,7 @@ import javax.swing.tree.TreePath;
 import org.meteoinfo.table.Field;
 import org.meteoinfo.geometry.geoprocess.GeoComputation;
 import org.meteoinfo.common.MIMath;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
@@ -629,7 +629,7 @@ public class FrmPSCF extends javax.swing.JDialog {
                         cellIdx.clear();
                         PolylineShape aPLZ = (PolylineShape) tLayer.getShapes().get(i);
                         for (int p = 0; p < aPLZ.getPointNum(); p++) {
-                            PointZ aPoint = new PointZ(aPLZ.getPoints().get(p).X, aPLZ.getPoints().get(p).Y);
+                            Coordinate aPoint = new Coordinate(aPLZ.getPoints().get(p).x, aPLZ.getPoints().get(p).y);
                             for (int s = 0; s < PSCFLayer.getShapeNum(); s++) {                                
                                 PolygonShape aPGS = (PolygonShape) PSCFLayer.getShapes().get(s);
                                 if (GeoComputation.pointInPolygon(aPGS.getPoints(), aPoint)) {
@@ -739,8 +739,8 @@ public class FrmPSCF extends javax.swing.JDialog {
                         cellIdx.clear();
                         PolylineShape aPLZ = (PolylineShape) tLayer.getShapes().get(i);
                         for (int p = 0; p < aPLZ.getPointNum(); p++) {
-                            PointZ aPoint = aPLZ.getPoints().get(p);
-                            if (aPoint.Z > thresholdHeight)      
+                            Coordinate aPoint = aPLZ.getPoints().get(p);
+                            if (aPoint.z > thresholdHeight)
                                 continue;
                             
                             for (int s = 0; s < PSCFLayer.getShapeNum(); s++) {                                

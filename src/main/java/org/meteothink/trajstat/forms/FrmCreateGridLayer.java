@@ -13,16 +13,16 @@
  */
 package org.meteothink.trajstat.forms;
 
-import org.meteoinfo.common.Extent;
+import org.meteoinfo.geometry.Extent;
 import org.meteoinfo.common.GenericFileFilter;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.MapLayer;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geo.mapdata.ShapeFileType;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.geoprocess.GeometryUtil;
+import org.meteoinfo.geometry.GeometryUtil;
 import org.meteoinfo.geometry.legend.LegendScheme;
 import org.meteoinfo.geometry.shape.PolygonShape;
 import org.meteoinfo.geometry.shape.ShapeTypes;
@@ -446,27 +446,27 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
             for (j = 0; j <= yNum - 1; j++) {
                 for (i = 0; i <= xNum - 1; i++) {
                     PolygonShape aPGS = new PolygonShape();
-                    List<PointZ> pList = new ArrayList<>();
-                    PointZ newPt = new PointZ();
+                    List<Coordinate> pList = new ArrayList<>();
+                    Coordinate newPt = new Coordinate();
                     aX = aLeft + i * aCellSize;
                     aY = aTop - j * aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
-                    newPt = new PointZ();
+                    newPt = new Coordinate();
                     aX = aX + aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
-                    newPt = new PointZ();
+                    newPt = new Coordinate();
                     aY = aY - aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
-                    newPt = new PointZ();
+                    newPt = new Coordinate();
                     aX = aX - aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
                     pList.add(pList.get(0));
 
@@ -542,27 +542,27 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
             for (j = 0; j <= yNum - 1; j++) {
                 for (i = 0; i <= xNum - 1; i++) {
                     PolygonShape aPGS = new PolygonShape();
-                    List<PointZ> pList = new ArrayList<>();
-                    PointZ newPt = new PointZ();
+                    List<Coordinate> pList = new ArrayList<>();
+                    Coordinate newPt = new Coordinate();
                     aX = aLeft + i * aCellSize;
                     aY = aTop - j * aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
-                    newPt = new PointZ();
+                    newPt = new Coordinate();
                     aX = aX + aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
-                    newPt = new PointZ();
+                    newPt = new Coordinate();
                     aY = aY - aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
-                    newPt = new PointZ();
+                    newPt = new Coordinate();
                     aX = aX - aCellSize;
-                    newPt.X = aX;
-                    newPt.Y = aY;
+                    newPt.x = aX;
+                    newPt.y = aY;
                     pList.add(newPt);
                     pList.add(pList.get(0));
 

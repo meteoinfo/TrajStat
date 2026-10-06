@@ -13,14 +13,14 @@
  */
 package org.meteothink.trajstat.trajectory;
 
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.common.util.GlobalUtil;
 import org.meteoinfo.geo.analysis.DistanceType;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geo.mapdata.ShapeFileType;
-import org.meteoinfo.geometry.geoprocess.GeometryUtil;
+import org.meteoinfo.geometry.GeometryUtil;
 import org.meteoinfo.geometry.legend.LegendScheme;
 import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.geometry.shape.ShapeTypes;
@@ -422,7 +422,7 @@ public class TrajUtil {
         aLayer.editAddField("Height", DataType.FLOAT);
 
         int i = 0;
-        List<PointZ> pList = new ArrayList<>();
+        List<Coordinate> pList = new ArrayList<>();
         while (true) {
             aLine = sr.readLine();
             if (aLine == null) {
@@ -469,18 +469,18 @@ public class TrajUtil {
                 sDate = LocalDateTime.parse(sYear + "-" + sMonth + "-" + sDay + " " + sHour, format);
                 pList = new ArrayList<>();
             }
-            PointZ aPoint = new PointZ();
-            aPoint.X = lon;
-            aPoint.Y = lat;
-            aPoint.Z = alt;
-            aPoint.M = press;
+            Coordinate aPoint = new Coordinate();
+            aPoint.x = lon;
+            aPoint.y = lat;
+            aPoint.z = alt;
+            aPoint.m = press;
             if (pList.size() > 1) {
-                PointZ oldPoint = pList.get(pList.size() - 1);
-                if (Math.abs(aPoint.X - oldPoint.X) > 100) {
-                    if (aPoint.X > oldPoint.X) {
-                        aPoint.X -= 360;
+                Coordinate oldPoint = pList.get(pList.size() - 1);
+                if (Math.abs(aPoint.x - oldPoint.x) > 100) {
+                    if (aPoint.x > oldPoint.x) {
+                        aPoint.x -= 360;
                     } else {
-                        aPoint.X += 360;
+                        aPoint.x += 360;
                     }
                 }
             }
@@ -490,7 +490,7 @@ public class TrajUtil {
         }
         sr.close();
 
-        if (i > 1 && pList.size() > 0) {
+        if (i > 1 && !pList.isEmpty()) {
             PolylineShape aPolylineZ = new PolylineShape();
             aPolylineZ.setPoints(pList);
             aPolylineZ.setValue(0);
@@ -584,12 +584,12 @@ public class TrajUtil {
                 cluster = clusters.get(i);
                 int m = 0;
                 for (j = 0; j < pointNum; j++) {
-                    PointZ point = (PointZ) shape.getPoints().get(j);
-                    trajDataArray[cluster - 1][m] += point.Y;
+                    Coordinate point = shape.getPoints().get(j);
+                    trajDataArray[cluster - 1][m] += point.y;
                     m += 1;
-                    trajDataArray[cluster - 1][m] += point.X;
+                    trajDataArray[cluster - 1][m] += point.x;
                     m += 1;
-                    trajDataArray[cluster - 1][m] += point.Z;
+                    trajDataArray[cluster - 1][m] += point.z;
                     m += 1;
                 }
                 trajNumArray[cluster - 1] += 1;
@@ -638,16 +638,16 @@ public class TrajUtil {
                 cluster = clusters.get(i);
                 double dist;
                 int m = 0;
-                PointZ[] trajA = new PointZ[pointNum];
-                PointZ[] trajB = new PointZ[pointNum];
+                Coordinate[] trajA = new Coordinate[pointNum];
+                Coordinate[] trajB = new Coordinate[pointNum];
                 for (j = 0; j < pointNum; j++) {
-                    PointZ point = (PointZ) shape.getPoints().get(j);
-                    trajA[j] = new PointZ(point.X, point.Y);
+                    Coordinate point = shape.getPoints().get(j);
+                    trajA[j] = new Coordinate(point.x, point.y);
                     y = trajDataArray[cluster - 1][m];
                     m += 1;
                     x = trajDataArray[cluster - 1][m];
                     m += 2;
-                    trajB[j] = new PointZ(x, y);
+                    trajB[j] = new Coordinate(x, y);
                 }
                 if (disType == DistanceType.EUCLIDEAN)
                     dist = calDistance_Euclidean(trajA, trajB);
@@ -667,14 +667,14 @@ public class TrajUtil {
      * @param trajB Trajectory B
      * @return Euclidean distance
      */
-    public static double calDistance_Euclidean(PointZ[] trajA, PointZ[] trajB) {
+    public static double calDistance_Euclidean(Coordinate[] trajA, Coordinate[] trajB) {
         double dist = 0.0;
         int n = trajA.length;
-        PointZ pA, pB;
+        Coordinate pA, pB;
         for (int j = 0; j < n; j++) {
             pA = trajA[j];
             pB = trajB[j];
-            dist += (pA.X - pB.X) * (pA.X - pB.X) + (pA.Y - pB.Y) * (pA.Y - pB.Y);
+            dist += (pA.x - pB.x) * (pA.x - pB.x) + (pA.y - pB.y) * (pA.y - pB.y);
         }
         dist = Math.sqrt(dist);
 
@@ -687,20 +687,20 @@ public class TrajUtil {
      * @param trajB Trajectory B
      * @return Angle distance
      */
-    public static double calDistance_Angle(PointZ[] trajA, PointZ[] trajB) {
+    public static double calDistance_Angle(Coordinate[] trajA, Coordinate[] trajB) {
         double dist = 0.0;
         double angle;
         int n = trajA.length;
-        PointZ pA, pB;
+        Coordinate pA, pB;
         double A, B, C;
-        double X0 = trajA[0].X;
-        double Y0 = trajB[0].Y;
+        double X0 = trajA[0].x;
+        double Y0 = trajB[0].y;
         for (int j = 1; j < n; j++) {
             pA = trajA[j];
             pB = trajB[j];
-            A = Math.pow((pA.X - X0), 2) + Math.pow((pA.Y - Y0), 2);
-            B = Math.pow((pB.X - X0), 2) + Math.pow((pB.Y - Y0), 2);
-            C = Math.pow((pB.X - pA.X), 2) + Math.pow((pB.Y - pA.Y), 2);
+            A = Math.pow((pA.x - X0), 2) + Math.pow((pA.y - Y0), 2);
+            B = Math.pow((pB.x - X0), 2) + Math.pow((pB.y - Y0), 2);
+            C = Math.pow((pB.x - pA.x), 2) + Math.pow((pB.y - pA.y), 2);
             if (A == 0 | B == 0) {
                 angle = 0;
             } else {

@@ -35,7 +35,7 @@ import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteothink.trajstat.Main;
 
@@ -243,7 +243,7 @@ public class FrmConvertToLine extends javax.swing.JDialog {
                 for (VectorLayer layer : layers) {
                     app.getProgressBarLabel().setText(layer.getLayerName());
                     String aLine;
-                    PointZ aPoint;
+                    Coordinate aPoint;
                     sNum = layer.getShapeNum();                    
                     for (i = 0; i < sNum; i++) {
                         aDate = (LocalDateTime) layer.getCellValue("Date", i);
@@ -256,9 +256,9 @@ public class FrmConvertToLine extends javax.swing.JDialog {
                         for (j = 0; j < aPLZ.getPointNum(); j++) {
                             if (j % aInterval == 0) {
                                 aPoint = aPLZ.getPoints().get(j);
-                                aLine = aLine + "," + String.format("%.2f", aPoint.Y) + ","
-                                        + String.format("%.2f", aPoint.X)
-                                        + "," + String.format("%.2f", aPoint.Z);
+                                aLine = aLine + "," + String.format("%.2f", aPoint.y) + ","
+                                        + String.format("%.2f", aPoint.x)
+                                        + "," + String.format("%.2f", aPoint.z);
                             }
                         }
                         sw.write(aLine);

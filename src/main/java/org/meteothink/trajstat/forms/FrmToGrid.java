@@ -8,7 +8,7 @@ package org.meteothink.trajstat.forms;
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.table.Field;
 import org.meteoinfo.common.GenericFileFilter;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
@@ -153,13 +153,13 @@ public class FrmToGrid extends javax.swing.JDialog {
             int yn = sn / xn;
             int idx = sn - xn;
             Shape shp = layer.getShapes().get(idx);
-            PointZ point = shp.getExtent().getCenterPoint();
-            double minx = point.X;
-            double miny = point.Y;
-            PointZ rpoint = layer.getShapes().get(idx + 1).getExtent().getCenterPoint();
-            double xdelta = rpoint.X - minx;
-            PointZ tpoint = layer.getShapes().get(idx - xn).getExtent().getCenterPoint();
-            double ydelta = tpoint.Y - miny;
+            Coordinate point = shp.getExtent().getCenterPoint();
+            double minx = point.x;
+            double miny = point.y;
+            Coordinate rpoint = layer.getShapes().get(idx + 1).getExtent().getCenterPoint();
+            double xdelta = rpoint.x - minx;
+            Coordinate tpoint = layer.getShapes().get(idx - xn).getExtent().getCenterPoint();
+            double ydelta = tpoint.y - miny;
 
             // Create GridData and set value
             GridData gData = new GridData(minx, xdelta, xn, miny, ydelta, yn);

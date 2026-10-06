@@ -18,7 +18,7 @@ import org.meteoinfo.common.util.GlobalUtil;
 import org.meteoinfo.geo.legend.*;
 import org.meteoinfo.geometry.legend.LegendManage;
 import org.meteoinfo.table.Field;
-import org.meteoinfo.geometry.geoprocess.GeometryUtil;
+import org.meteoinfo.geometry.GeometryUtil;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geometry.legend.*;
@@ -26,7 +26,7 @@ import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.geo.plugin.IApplication;
 import org.meteoinfo.geo.plugin.PluginBase;
 import org.meteoinfo.geo.mapdata.ShapeFileType;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ui.CheckBoxListEntry;
@@ -672,7 +672,7 @@ public class Main extends PluginBase {
 
             //Average trajectory
             List<String> valueList = new ArrayList<>();
-            List<List<PointZ>> pointList = new ArrayList<>();
+            List<List<Coordinate>> pointList = new ArrayList<>();
             List<Integer> trajNums = new ArrayList<>();
             String vStr;
             for (VectorLayer layer : layers) {
@@ -682,38 +682,38 @@ public class Main extends PluginBase {
                         continue;
                     }
 
-                    List<PointZ> points = (List<PointZ>) layer.getShapes().get(i).getPoints();
+                    List<Coordinate> points = (List<Coordinate>) layer.getShapes().get(i).getPoints();
                     if (!valueList.contains(vStr)) {
                         valueList.add(vStr);
                         pointList.add(points);
                         trajNums.add(1);
                     } else {
                         int n = valueList.indexOf(vStr);
-                        List<PointZ> ps = pointList.get(n);
+                        List<Coordinate> ps = pointList.get(n);
                         for (int j = 0; j < points.size(); j++) {
                             if (j >= ps.size()) {
                                 break;
                             }
-                            PointZ point = ps.get(j);
-                            PointZ pp = points.get(j);
-                            point.X += pp.X;
-                            point.Y += pp.Y;
-                            point.Z += pp.Z;
-                            point.M += pp.M;
+                            Coordinate point = ps.get(j);
+                            Coordinate pp = points.get(j);
+                            point.x += pp.x;
+                            point.y += pp.y;
+                            point.z += pp.z;
+                            point.m += pp.m;
                         }
                         trajNums.set(n, trajNums.get(n) + 1);
                     }
                 }
             }
             for (i = 0; i < pointList.size(); i++) {
-                List<PointZ> plist = pointList.get(i);
+                List<Coordinate> plist = pointList.get(i);
                 int n = trajNums.get(i);
                 for (int j = 0; j < plist.size(); j++) {
-                    PointZ point = plist.get(j);
-                    point.X /= n;
-                    point.Y /= n;
-                    point.Z /= n;
-                    point.M /= n;
+                    Coordinate point = plist.get(j);
+                    point.x /= n;
+                    point.y /= n;
+                    point.z /= n;
+                    point.m /= n;
                 }
             }
 
@@ -744,7 +744,7 @@ public class Main extends PluginBase {
                 for (i = 0; i < pointList.size(); i++) {
                     try {
                         PolylineShape lineShape = new PolylineShape();
-                        List<PointZ> points = pointList.get(i);
+                        List<Coordinate> points = pointList.get(i);
                         lineShape.setPoints(points);
                         lineShape.setExtent(GeometryUtil.getPointsExtent(points));
                         int shapeNum = trajLayer.getShapeNum();

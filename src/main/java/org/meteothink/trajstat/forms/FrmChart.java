@@ -17,8 +17,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.meteoinfo.chart.*;
 import org.meteoinfo.chart.graphic.GraphicFactory;
 import org.meteoinfo.chart.plot.*;
-import org.meteoinfo.common.Extent;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Extent;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.common.XAlign;
 import org.meteoinfo.common.YAlign;
 import org.meteoinfo.geo.io.GraphicUtil;
@@ -349,7 +349,7 @@ public class FrmChart extends JDialog {
                 plb.setWidth(2);
             }
         }
-        PointZ pz;
+        Coordinate pz;
         Extent extent = new Extent();
         List<ColorBreak> cbs = new ArrayList<>();
         int idx = 0;
@@ -358,15 +358,15 @@ public class FrmChart extends JDialog {
         Array sz = Array.factory(DataType.DOUBLE, new int[]{trajN});
         for (int i = 0; i < trajN; i++) {
             PolylineShape shape = (PolylineShape) this.trajShapes.get(i)[0];
-            if (this.dateHeight.size() > 0 && this.dateHeight.size() > i) {
+            if (!this.dateHeight.isEmpty() && this.dateHeight.size() > i) {
                 seriesKey = this.dateHeight.get(i);
             } else {
                 seriesKey = "Line " + String.valueOf(i);
             }
-            PointZ ppz = (PointZ)shape.getPoints().get(0);
-            sx.setDouble(i, ppz.X);
-            sy.setDouble(i, ppz.Y);
-            sz.setDouble(i, ppz.Z);
+            Coordinate ppz = shape.getPoints().get(0);
+            sx.setDouble(i, ppz.x);
+            sy.setDouble(i, ppz.y);
+            sz.setDouble(i, ppz.z);
             ColorBreak cb;
             if (ls == null) {
                 cb = (ColorBreak) this.trajShapes.get(i)[1];
@@ -381,10 +381,10 @@ public class FrmChart extends JDialog {
                 Array ydata = Array.factory(DataType.DOUBLE, new int[]{n});
                 Array zdata = Array.factory(DataType.DOUBLE, new int[]{n});
                 for (int j = 0; j < n; j++) {
-                    pz = (PointZ) line.getPointList().get(j);
-                    xdata.setDouble(j, pz.X);
-                    ydata.setDouble(j, pz.Y);
-                    zdata.setDouble(j, pz.Z);
+                    pz = line.getPointList().get(j);
+                    xdata.setDouble(j, pz.x);
+                    ydata.setDouble(j, pz.y);
+                    zdata.setDouble(j, pz.z);
                 }
 
                 Graphic gg = GraphicFactory.createLineString3D(xdata, ydata, zdata, cb);

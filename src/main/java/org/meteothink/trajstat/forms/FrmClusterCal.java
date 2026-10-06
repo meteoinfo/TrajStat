@@ -54,7 +54,7 @@ import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geometry.legend.LegendScheme;
 import org.meteoinfo.geometry.legend.PolylineBreak;
-import org.meteoinfo.common.PointZ;
+import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteothink.trajstat.Main;
 import org.meteothink.trajstat.trajectory.TrajUtil;
@@ -590,11 +590,11 @@ public class FrmClusterCal extends javax.swing.JDialog {
                     aLine = src.readLine();
                     Cluster = Integer.parseInt(aLine.split(",")[CLev]);
                     for (j = 0; j < pointNum; j++) {
-                        PointZ point = shape.getPoints().get(j);
-                        trajDataArray[Cluster - 1][j][0] += point.Y;
-                        trajDataArray[Cluster - 1][j][1] += point.X;
-                        trajDataArray[Cluster - 1][j][2] += point.Z;
-                        trajDataArray[Cluster - 1][j][3] += point.M;
+                        Coordinate point = shape.getPoints().get(j);
+                        trajDataArray[Cluster - 1][j][0] += point.y;
+                        trajDataArray[Cluster - 1][j][1] += point.x;
+                        trajDataArray[Cluster - 1][j][2] += point.z;
+                        trajDataArray[Cluster - 1][j][3] += point.m;
                     }
                     trajNumArray[Cluster - 1] += 1;
                     totalTrajNum += 1;
@@ -640,13 +640,13 @@ public class FrmClusterCal extends javax.swing.JDialog {
                 for (i = 0; i < CLev; i++) {
                     try {
                         PolylineShape aPLZ = new PolylineShape();
-                        List<PointZ> points = new ArrayList<>();
+                        List<Coordinate> points = new ArrayList<>();
                         for (j = 0; j < pointNum; j++) {
-                            PointZ pt = new PointZ();
-                            pt.Y = trajDataArray[i][j][0];
-                            pt.X = trajDataArray[i][j][1];
-                            pt.Z = trajDataArray[i][j][2];
-                            pt.M = trajDataArray[i][j][3];
+                            Coordinate pt = new Coordinate();
+                            pt.y = trajDataArray[i][j][0];
+                            pt.x = trajDataArray[i][j][1];
+                            pt.z = trajDataArray[i][j][2];
+                            pt.m = trajDataArray[i][j][3];
                             points.add(pt);
                         }
                         aPLZ.setPoints(points);
