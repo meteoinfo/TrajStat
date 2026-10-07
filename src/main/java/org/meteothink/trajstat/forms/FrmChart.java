@@ -220,8 +220,8 @@ public class FrmChart extends JDialog {
                             int hour = Integer.parseInt(trajLayer.getCellValue("Hour", i).toString());
                             aDate = aDate.withHour(hour);
                             dhstr = df.format(aDate);
-                            float height = (float) trajLayer.getCellValue("Height", i);
-                            dhstr = dhstr + "_" + String.valueOf(height);
+                            //float height = (float) trajLayer.getCellValue("Height", i);
+                            dhstr = dhstr + "_" + trajLayer.getCellValue("Height", i).toString();
                             if (this.dateHeight.contains(dhstr)) {
                                 continue;
                             }
@@ -267,14 +267,14 @@ public class FrmChart extends JDialog {
             if (!this.dateHeight.isEmpty() && this.dateHeight.size() > i) {
                 seriesKey = this.dateHeight.get(i);
             } else {
-                seriesKey = "Line " + String.valueOf(i);
+                seriesKey = "Line " + i;
             }
             int n = shape.getPointNum();
             Array xdata = Array.factory(DataType.DOUBLE, new int[]{n});
             Array ydata = Array.factory(DataType.DOUBLE, new int[]{n});
             for (int j = 0; j < n; j++) {
                 xdata.setDouble(j, j);
-                ydata.setDouble(j, (shape.getPoints().get(j)).M);
+                ydata.setDouble(j, shape.getPoints().get(j).m);
             }
             ColorBreak cb;
             if (ls == null) {

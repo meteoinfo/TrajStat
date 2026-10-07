@@ -188,7 +188,6 @@ public class TrajUtil {
      *
      * @param trajfns Trajectory end point files
      * @param tgsfn TGS file
-     * @throws IOException
      */
     public static void trajToTGS(List<String> trajfns, String tgsfn) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(tgsfn)));
@@ -321,8 +320,6 @@ public class TrajUtil {
      * Join TGS files
      *
      * @param trajConfig Trajectory configure
-     * @return 
-     * @throws IOException
      */
     public static String joinTGSFiles(TrajConfig trajConfig) throws IOException {
         int dayNum = trajConfig.getDayNum();
@@ -361,7 +358,6 @@ public class TrajUtil {
      *
      * @param tgsfns TGS files
      * @param joinedfn Joined file name
-     * @throws IOException
      */
     public static void joinTGSFiles(List<String> tgsfns, String joinedfn) throws IOException {
 
@@ -394,9 +390,6 @@ public class TrajUtil {
      *
      * @param tgsFile The TGS file
      * @param shpFile The shape file
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws Exception
      * @return The vector layer
      */
     public static VectorLayer convertToShapeFile(String tgsFile, String shpFile) throws FileNotFoundException, IOException, Exception {
