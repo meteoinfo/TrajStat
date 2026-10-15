@@ -35,8 +35,7 @@ import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.Coordinate;
-import org.meteoinfo.geometry.shape.PolylineShape;
+import org.meteoinfo.geometry.*;
 import org.meteothink.trajstat.Main;
 
 /**
@@ -252,10 +251,10 @@ public class FrmConvertToLine extends javax.swing.JDialog {
                         aLine = format.format(aDate);
                         String height = layer.getCellValue("Height", i).toString();
                         aLine = aLine + "," + height;
-                        PolylineShape aPLZ = (PolylineShape) layer.getShapes().get(i);
-                        for (j = 0; j < aPLZ.getPointNum(); j++) {
+                        LineString aPLZ = (LineString) layer.getShapes().get(i);
+                        for (j = 0; j < aPLZ.getNumPoints(); j++) {
                             if (j % aInterval == 0) {
-                                aPoint = aPLZ.getPoints().get(j);
+                                aPoint = aPLZ.getCoordinateN(j);
                                 aLine = aLine + "," + String.format("%.2f", aPoint.y) + ","
                                         + String.format("%.2f", aPoint.x)
                                         + "," + String.format("%.2f", aPoint.z);

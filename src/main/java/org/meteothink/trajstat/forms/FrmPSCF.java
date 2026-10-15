@@ -26,13 +26,11 @@ import javax.swing.tree.TreePath;
 import org.meteoinfo.table.Field;
 import org.meteoinfo.geometry.geoprocess.GeoComputation;
 import org.meteoinfo.common.MIMath;
-import org.meteoinfo.geometry.Coordinate;
+import org.meteoinfo.geometry.*;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.shape.PolygonShape;
-import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.ui.CheckTreeManager;
 import org.meteoinfo.ui.CheckTreeSelectionModel;
 
@@ -627,12 +625,12 @@ public class FrmPSCF extends javax.swing.JDialog {
                         }
 
                         cellIdx.clear();
-                        PolylineShape aPLZ = (PolylineShape) tLayer.getShapes().get(i);
-                        for (int p = 0; p < aPLZ.getPointNum(); p++) {
-                            Coordinate aPoint = new Coordinate(aPLZ.getPoints().get(p).x, aPLZ.getPoints().get(p).y);
+                        LineString aPLZ = (LineString) tLayer.getShapes().get(i);
+                        for (int p = 0; p < aPLZ.getNumPoints(); p++) {
+                            Coordinate aPoint = aPLZ.getCoordinateN(p);
                             for (int s = 0; s < PSCFLayer.getShapeNum(); s++) {                                
-                                PolygonShape aPGS = (PolygonShape) PSCFLayer.getShapes().get(s);
-                                if (GeoComputation.pointInPolygon(aPGS.getPoints(), aPoint)) {
+                                Polygon aPGS = (Polygon) PSCFLayer.getShapes().get(s);
+                                if (GeoComputation.pointInPolygon(aPGS, aPoint)) {
                                     Nijs[s] += 1;                                    
                                     if (!cellIdx.contains(s)){
                                         TNijs[s] += 1;
@@ -737,15 +735,15 @@ public class FrmPSCF extends javax.swing.JDialog {
                         }
 
                         cellIdx.clear();
-                        PolylineShape aPLZ = (PolylineShape) tLayer.getShapes().get(i);
-                        for (int p = 0; p < aPLZ.getPointNum(); p++) {
-                            Coordinate aPoint = aPLZ.getPoints().get(p);
+                        LineString aPLZ = (LineString) tLayer.getShapes().get(i);
+                        for (int p = 0; p < aPLZ.getNumPoints(); p++) {
+                            Coordinate aPoint = aPLZ.getCoordinateN(p);
                             if (aPoint.z > thresholdHeight)
                                 continue;
                             
                             for (int s = 0; s < PSCFLayer.getShapeNum(); s++) {                                
-                                PolygonShape aPGS = (PolygonShape) PSCFLayer.getShapes().get(s);
-                                if (GeoComputation.pointInPolygon(aPGS.getPoints(), aPoint)) {
+                                Polygon aPGS = (Polygon) PSCFLayer.getShapes().get(s);
+                                if (GeoComputation.pointInPolygon(aPGS, aPoint)) {
                                     Nijs[s] += 1;                                    
                                     if (!cellIdx.contains(s)){
                                         TNijs[s] += 1;

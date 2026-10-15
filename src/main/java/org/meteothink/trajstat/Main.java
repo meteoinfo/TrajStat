@@ -16,9 +16,9 @@ package org.meteothink.trajstat;
 import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.common.util.GlobalUtil;
 import org.meteoinfo.geo.legend.*;
+import org.meteoinfo.geometry.*;
 import org.meteoinfo.geometry.legend.LegendManage;
 import org.meteoinfo.table.Field;
-import org.meteoinfo.geometry.GeometryUtil;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geometry.legend.*;
@@ -26,9 +26,6 @@ import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.geo.plugin.IApplication;
 import org.meteoinfo.geo.plugin.PluginBase;
 import org.meteoinfo.geo.mapdata.ShapeFileType;
-import org.meteoinfo.geometry.Coordinate;
-import org.meteoinfo.geometry.shape.PolylineShape;
-import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ui.CheckBoxListEntry;
 import org.meteothink.trajstat.forms.*;
 import org.meteothink.trajstat.trajectory.TrajUtil;
@@ -529,7 +526,7 @@ public class Main extends PluginBase {
 
                 if (outLayer.getShapeNum() > 0) {
                     outLayer.setLayerName(file.getName());
-                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
+                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(GeometryType.LINESTRING, Color.black, 1.0f);
                     aLS.setFieldName("Year");
                     outLayer.setLegendScheme(aLS);
                     outLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
@@ -682,7 +679,7 @@ public class Main extends PluginBase {
                         continue;
                     }
 
-                    List<Coordinate> points = (List<Coordinate>) layer.getShapes().get(i).getPoints();
+                    List<Coordinate> points = layer.getShapes().get(i).getCoordinates();
                     if (!valueList.contains(vStr)) {
                         valueList.add(vStr);
                         pointList.add(points);
@@ -743,9 +740,9 @@ public class Main extends PluginBase {
                 trajLayer.editAddField(fieldName, DataType.STRING);
                 for (i = 0; i < pointList.size(); i++) {
                     try {
-                        PolylineShape lineShape = new PolylineShape();
+                        MultiLineString lineShape = new MultiLineString();
                         List<Coordinate> points = pointList.get(i);
-                        lineShape.setPoints(points);
+                        lineShape.setCoordinates(points);
                         lineShape.setExtent(GeometryUtil.getPointsExtent(points));
                         int shapeNum = trajLayer.getShapeNum();
                         if (trajLayer.editInsertShape(lineShape, shapeNum)) {
@@ -758,7 +755,7 @@ public class Main extends PluginBase {
 
                 if (trajLayer.getShapeNum() > 0) {
                     trajLayer.setLayerName(file.getName());
-                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
+                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(GeometryType.LINESTRING, Color.black, 1.0f);
                     aLS.setFieldName("Year");
                     trajLayer.setLegendScheme(aLS);
                     trajLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);

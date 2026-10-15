@@ -13,19 +13,16 @@
  */
 package org.meteothink.trajstat.forms;
 
-import org.meteoinfo.geometry.Extent;
+import org.meteoinfo.geometry.*;
 import org.meteoinfo.common.GenericFileFilter;
-import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.MapLayer;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geo.mapdata.ShapeFileType;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.GeometryUtil;
+import org.meteoinfo.geometry.Polygon;
 import org.meteoinfo.geometry.legend.LegendScheme;
-import org.meteoinfo.geometry.shape.PolygonShape;
-import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.projection.KnownCoordinateSystems;
 import org.meteoinfo.projection.ProjectionInfo;
@@ -445,7 +442,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
             double aY;
             for (j = 0; j <= yNum - 1; j++) {
                 for (i = 0; i <= xNum - 1; i++) {
-                    PolygonShape aPGS = new PolygonShape();
+                    Polygon aPGS = new Polygon();
                     List<Coordinate> pList = new ArrayList<>();
                     Coordinate newPt = new Coordinate();
                     aX = aLeft + i * aCellSize;
@@ -470,8 +467,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
                     pList.add(newPt);
                     pList.add(pList.get(0));
 
-                    aPGS.setPoints(pList);
-                    aPGS.setExtent(GeometryUtil.getPointsExtent(aPGS.getPoints()));
+                    aPGS.setCoordinates(pList);
                     int shapeNum = aLayer.getShapeNum();
                     try {
                         if (aLayer.editInsertShape(aPGS, shapeNum)) {
@@ -490,7 +486,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
 
             if (aLayer.getShapeNum() > 0) {
                 aLayer.setLayerName(file.getName());
-                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYGON, Color.yellow, 1.0f);
+                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(GeometryType.POLYGON, Color.yellow, 1.0f);
                 aLS.setFieldName("ID");
                 aLayer.setLegendScheme(aLS);
                 aLayer.setLayerDrawType(LayerDrawType.GRID_FILL);
@@ -541,7 +537,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
             double aY;
             for (j = 0; j <= yNum - 1; j++) {
                 for (i = 0; i <= xNum - 1; i++) {
-                    PolygonShape aPGS = new PolygonShape();
+                    Polygon aPGS = new Polygon();
                     List<Coordinate> pList = new ArrayList<>();
                     Coordinate newPt = new Coordinate();
                     aX = aLeft + i * aCellSize;
@@ -566,8 +562,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
                     pList.add(newPt);
                     pList.add(pList.get(0));
 
-                    aPGS.setPoints(pList);
-                    aPGS.setExtent(GeometryUtil.getPointsExtent(aPGS.getPoints()));
+                    aPGS.setCoordinates(pList);
                     int shapeNum = aLayer.getShapeNum();
                     try {
                         if (aLayer.editInsertShape(aPGS, shapeNum)) {
@@ -585,7 +580,7 @@ public class FrmCreateGridLayer extends javax.swing.JDialog {
 
             if (aLayer.getShapeNum() > 0) {
                 aLayer.setLayerName(file.getName());
-                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYGON, Color.yellow, 1.0f);
+                LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(GeometryType.POLYGON, Color.yellow, 1.0f);
                 aLS.setFieldName("ID");
                 aLayer.setLegendScheme(aLS);
                 aLayer.setLayerDrawType(LayerDrawType.GRID_FILL);

@@ -13,7 +13,7 @@ import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.shape.Shape;
+import org.meteoinfo.geometry.Geometry;
 
 import javax.swing.*;
 import java.io.File;
@@ -139,9 +139,8 @@ public class FrmToGrid extends javax.swing.JDialog {
             int sn = layer.getShapeNum();
             int xn = 0;
             double oldx = Double.NEGATIVE_INFINITY;
-            double x;
-            for (Shape shape : layer.getShapes()) {
-                x = shape.getPoints().get(0).X;
+            for (Geometry shape : layer.getShapes()) {
+                double x = shape.getCoordinate().X;
                 if (x < oldx) {
                     break;
                 } else {
@@ -152,7 +151,7 @@ public class FrmToGrid extends javax.swing.JDialog {
 
             int yn = sn / xn;
             int idx = sn - xn;
-            Shape shp = layer.getShapes().get(idx);
+            Geometry shp = layer.getShapes().get(idx);
             Coordinate point = shp.getExtent().getCenterPoint();
             double minx = point.x;
             double miny = point.y;

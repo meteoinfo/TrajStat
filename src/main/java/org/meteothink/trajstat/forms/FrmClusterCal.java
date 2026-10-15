@@ -46,7 +46,6 @@ import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.GroupNode;
 import org.meteoinfo.geo.legend.LayerNode;
 import org.meteoinfo.geo.plugin.IApplication;
-import org.meteoinfo.geometry.shape.PolylineShape;
 import org.meteoinfo.geo.analysis.DistanceType;
 import org.meteoinfo.common.GenericFileFilter;
 import org.meteoinfo.ndarray.DataType;
@@ -54,8 +53,7 @@ import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geometry.legend.LegendScheme;
 import org.meteoinfo.geometry.legend.PolylineBreak;
-import org.meteoinfo.geometry.Coordinate;
-import org.meteoinfo.geometry.shape.ShapeTypes;
+import org.meteoinfo.geometry.*;
 import org.meteothink.trajstat.Main;
 import org.meteothink.trajstat.trajectory.TrajUtil;
 
@@ -465,8 +463,8 @@ public class FrmClusterCal extends javax.swing.JDialog {
             if (((CheckBoxListEntry) listModel.get(i)).isSelected()) {
                 VectorLayer layer = (VectorLayer) ((CheckBoxListEntry) listModel.get(i)).getValue();
                 if (n == 0) {
-                    PolylineShape shape = (PolylineShape) layer.getShapes().get(0);
-                    pointNum = shape.getPointNum();
+                    LineString shape = (LineString) layer.getShapes().get(0);
+                    pointNum = shape.getNumPoints();
                 }
                 trajNum += layer.getShapeNum();
 
@@ -582,15 +580,15 @@ public class FrmClusterCal extends javax.swing.JDialog {
             int totalTrajNum = 0;
             for (VectorLayer layer : layers) {
                 for (int s = 0; s < layer.getShapeNum(); s++) {
-                    PolylineShape shape = (PolylineShape) layer.getShapes().get(s);
-                    if (shape.getPointNum() != pointNum) {
+                    LineString shape = (LineString) layer.getShapes().get(s);
+                    if (shape.getNumPoints() != pointNum) {
                         continue;
                     }
 
                     aLine = src.readLine();
                     Cluster = Integer.parseInt(aLine.split(",")[CLev]);
                     for (j = 0; j < pointNum; j++) {
-                        Coordinate point = shape.getPoints().get(j);
+                        Coordinate point = shape.getCoordinateN(j);
                         trajDataArray[Cluster - 1][j][0] += point.y;
                         trajDataArray[Cluster - 1][j][1] += point.x;
                         trajDataArray[Cluster - 1][j][2] += point.z;
@@ -639,7 +637,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
 
                 for (i = 0; i < CLev; i++) {
                     try {
-                        PolylineShape aPLZ = new PolylineShape();
+                        LineString aPLZ = new LineString();
                         List<Coordinate> points = new ArrayList<>();
                         for (j = 0; j < pointNum; j++) {
                             Coordinate pt = new Coordinate();
@@ -649,8 +647,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
                             pt.m = trajDataArray[i][j][3];
                             points.add(pt);
                         }
-                        aPLZ.setPoints(points);
-                        //aPLZ.setExtent(MIMath.getPointsExtent(aPLZ.getPoints()));
+                        aPLZ.setCoordinates(points);
                         int shapeNum = aLayer.getShapeNum();
                         if (aLayer.editInsertShape(aPLZ, shapeNum)) {
                             aLayer.editCellValue("Cluster", shapeNum, String.valueOf(shapeNum + 1));
@@ -665,7 +662,7 @@ public class FrmClusterCal extends javax.swing.JDialog {
 
                 if (aLayer.getShapeNum() > 0) {
                     aLayer.setLayerName(file.getName());
-                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
+                    LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(GeometryType.LINESTRING, Color.black, 1.0f);
                     aLS.setFieldName("Cluster");
                     aLayer.setLegendScheme(aLS);
                     aLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
@@ -874,12 +871,12 @@ public class FrmClusterCal extends javax.swing.JDialog {
             if (((CheckBoxListEntry) listModel.get(i)).isSelected()) {
                 VectorLayer layer = (VectorLayer) ((CheckBoxListEntry) listModel.get(i)).getValue();                
                 for (int j = 0; j < layer.getShapeNum(); j++) {
-                    PolylineShape shape = (PolylineShape) layer.getShapes().get(j);
+                    LineString shape = (LineString) layer.getShapes().get(j);
                     date = (LocalDateTime) layer.getCellValue("Date", j);
                     hour = Integer.parseInt(layer.getCellValue("Hour", j).toString());
                     date = date.withHour(hour);
                     tDates.add(date);
-                    pointNum = shape.getPointNum();
+                    pointNum = shape.getNumPoints();
                     pNumsAll.add(pointNum);
                     idx = pNums.indexOf(pointNum);
                     if (idx >= 0){

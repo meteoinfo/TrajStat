@@ -40,7 +40,7 @@ import org.meteoinfo.ndarray.Array;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.geo.plugin.IApplication;
 import org.meteoinfo.projection.ProjectionInfo;
-import org.meteoinfo.geometry.shape.*;
+import org.meteoinfo.geometry.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -72,7 +72,7 @@ public class FrmChart extends JDialog {
     private javax.swing.JButton button_RemoveAll;
     private javax.swing.JToggleButton button_3D;
     private List<String> dateHeight = new ArrayList<>();
-    private List<Object[]> trajShapes = new ArrayList<>();
+    private List<Graphic> trajShapes = new ArrayList<>();
     private List<MapLayer> mLayers = new ArrayList<>();
     private boolean isSingleLegend = true;
     // </editor-fold>
@@ -228,9 +228,9 @@ public class FrmChart extends JDialog {
                             this.dateHeight.add(dhstr);
                         }
 
-                        PolylineShape aPLZ = (PolylineShape) trajLayer.getShapes().get(i);
+                        MultiLineString aPLZ = (MultiLineString) trajLayer.getShapes().get(i);
                         ColorBreak cb = trajLayer.getLegendScheme().getLegendBreaks().get(aPLZ.getLegendIndex());
-                        trajShapes.add(new Object[]{aPLZ, cb});
+                        trajShapes.add(new Graphic(aPLZ, cb));
                         n += 1;
                     }
                 }
@@ -253,7 +253,7 @@ public class FrmChart extends JDialog {
         int trajN = this.trajShapes.size();
         LegendScheme ls = null;
         if (this.isSingleLegend) {
-            ls = LegendManage.createUniqValueLegendScheme(trajN, ShapeTypes.POLYLINE);
+            ls = LegendManage.createUniqValueLegendScheme(trajN, GeometryType.LINESTRING);
             for (ColorBreak cb : ls.getLegendBreaks()) {
                 PolylineBreak plb = (PolylineBreak) cb;
                 plb.setDrawSymbol(true);
@@ -263,22 +263,22 @@ public class FrmChart extends JDialog {
         }
         List<ColorBreak> cbs = new ArrayList<>();
         for (int i = 0; i < trajN; i++) {
-            PolylineShape shape = (PolylineShape) this.trajShapes.get(i)[0];
+            Geometry shape = this.trajShapes.get(i).getGeometry();
             if (!this.dateHeight.isEmpty() && this.dateHeight.size() > i) {
                 seriesKey = this.dateHeight.get(i);
             } else {
                 seriesKey = "Line " + i;
             }
-            int n = shape.getPointNum();
+            int n = shape.getNumPoints();
             Array xdata = Array.factory(DataType.DOUBLE, new int[]{n});
             Array ydata = Array.factory(DataType.DOUBLE, new int[]{n});
             for (int j = 0; j < n; j++) {
                 xdata.setDouble(j, j);
-                ydata.setDouble(j, shape.getPoints().get(j).m);
+                ydata.setDouble(j, shape.getCoordinates().get(j).m);
             }
             ColorBreak cb;
             if (ls == null) {
-                cb = (ColorBreak) this.trajShapes.get(i)[1];
+                cb = this.trajShapes.get(i).getLegendBreak();
             } else {
                 cb = ls.getLegendBreak(i);
                 cb.setCaption(seriesKey);
@@ -305,7 +305,7 @@ public class FrmChart extends JDialog {
         plot.getYAxis().setLabel(text);
 
         if (ls == null) {
-            ls = new LegendScheme(ShapeTypes.POLYLINE);
+            ls = new LegendScheme(GeometryType.LINESTRING);
             ls.setLegendBreaks(cbs);
         }
         ChartLegend legend = new ChartLegend(ls);
@@ -341,7 +341,7 @@ public class FrmChart extends JDialog {
         int trajN = this.trajShapes.size();
         LegendScheme ls = null;
         if (this.isSingleLegend) {
-            ls = LegendManage.createUniqValueLegendScheme(trajN, ShapeTypes.POLYLINE);
+            ls = LegendManage.createUniqValueLegendScheme(trajN, GeometryType.LINESTRING);
             for (ColorBreak cb : ls.getLegendBreaks()) {
                 PolylineBreak plb = (PolylineBreak) cb;
                 plb.setDrawSymbol(true);
@@ -357,31 +357,31 @@ public class FrmChart extends JDialog {
         Array sy = Array.factory(DataType.DOUBLE, new int[]{trajN});
         Array sz = Array.factory(DataType.DOUBLE, new int[]{trajN});
         for (int i = 0; i < trajN; i++) {
-            PolylineShape shape = (PolylineShape) this.trajShapes.get(i)[0];
+            MultiLineString shape = (MultiLineString) this.trajShapes.get(i).getGeometry();
             if (!this.dateHeight.isEmpty() && this.dateHeight.size() > i) {
                 seriesKey = this.dateHeight.get(i);
             } else {
                 seriesKey = "Line " + String.valueOf(i);
             }
-            Coordinate ppz = shape.getPoints().get(0);
+            Coordinate ppz = shape.getCoordinate();
             sx.setDouble(i, ppz.x);
             sy.setDouble(i, ppz.y);
             sz.setDouble(i, ppz.z);
             ColorBreak cb;
             if (ls == null) {
-                cb = (ColorBreak) this.trajShapes.get(i)[1];
+                cb = this.trajShapes.get(i).getLegendBreak();
             } else {
                 cb = ls.getLegendBreak(i);
                 cb.setCaption(seriesKey);
             }
             cbs.add(cb);
-            for (Polyline line : shape.getPolylines()) {
-                int n = line.getPointList().size();
+            for (LineString line : (LineString[]) shape.getGeometries()) {
+                int n = line.getNumPoints();
                 Array xdata = Array.factory(DataType.DOUBLE, new int[]{n});
                 Array ydata = Array.factory(DataType.DOUBLE, new int[]{n});
                 Array zdata = Array.factory(DataType.DOUBLE, new int[]{n});
                 for (int j = 0; j < n; j++) {
-                    pz = line.getPointList().get(j);
+                    pz = line.getCoordinateN(j);
                     xdata.setDouble(j, pz.x);
                     ydata.setDouble(j, pz.y);
                     zdata.setDouble(j, pz.z);
@@ -429,7 +429,7 @@ public class FrmChart extends JDialog {
         plot.getZAxis().setLabel(text);
 
         if (ls == null) {
-            ls = new LegendScheme(ShapeTypes.POLYLINE);
+            ls = new LegendScheme(GeometryType.LINESTRING);
             ls.setLegendBreaks(cbs);
         }
         ChartLegend legend = new ChartLegend(ls);
@@ -444,7 +444,7 @@ public class FrmChart extends JDialog {
     }
 
     private void onRemoveClick(ActionEvent e) {
-        if (this.trajShapes.size() > 0) {
+        if (!this.trajShapes.isEmpty()) {
             this.trajShapes.remove(this.trajShapes.size() - 1);
             this.dateHeight.remove(this.dateHeight.size() - 1);
             this.updateChart();
@@ -452,7 +452,7 @@ public class FrmChart extends JDialog {
     }
 
     private void onRemoveAllClick(ActionEvent e) {
-        if (this.trajShapes.size() > 0) {
+        if (!this.trajShapes.isEmpty()) {
             this.trajShapes.clear();
             this.dateHeight.clear();
             this.updateChart();

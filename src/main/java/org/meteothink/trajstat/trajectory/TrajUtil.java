@@ -13,17 +13,14 @@
  */
 package org.meteothink.trajstat.trajectory;
 
-import org.meteoinfo.geometry.Coordinate;
 import org.meteoinfo.common.util.GlobalUtil;
 import org.meteoinfo.geo.analysis.DistanceType;
 import org.meteoinfo.geo.layer.LayerDrawType;
 import org.meteoinfo.geo.layer.VectorLayer;
 import org.meteoinfo.geo.legend.LegendManage;
 import org.meteoinfo.geo.mapdata.ShapeFileType;
-import org.meteoinfo.geometry.GeometryUtil;
+import org.meteoinfo.geometry.*;
 import org.meteoinfo.geometry.legend.LegendScheme;
-import org.meteoinfo.geometry.shape.PolylineShape;
-import org.meteoinfo.geometry.shape.ShapeTypes;
 import org.meteoinfo.ndarray.DataType;
 import org.meteoinfo.table.Field;
 
@@ -45,8 +42,6 @@ public class TrajUtil {
      * Trajectory calculation
      *
      * @param trajConfig Trajectory configure
-     * @throws IOException
-     * @throws InterruptedException
      */
     public static void trajCal(TrajConfig trajConfig) throws IOException, InterruptedException {
         String pluginDir = GlobalUtil.getAppPath(TrajUtil.class);
@@ -440,8 +435,7 @@ public class TrajUtil {
 
             if (ageHour.equals("0.0")) {
                 if (i > 0 && pList.size() > 1) {
-                    PolylineShape aPolylineZ = new PolylineShape();
-                    aPolylineZ.setPoints(pList);
+                    LineString aPolylineZ = new LineString(pList);
                     aPolylineZ.setValue(0);
                     aPolylineZ.setExtent(GeometryUtil.getPointsExtent(pList));
                     int shapeNum = aLayer.getShapeNum();
@@ -484,8 +478,7 @@ public class TrajUtil {
         sr.close();
 
         if (i > 1 && !pList.isEmpty()) {
-            PolylineShape aPolylineZ = new PolylineShape();
-            aPolylineZ.setPoints(pList);
+            LineString aPolylineZ = new LineString(pList);
             aPolylineZ.setValue(0);
             aPolylineZ.setExtent(GeometryUtil.getPointsExtent(pList));
             int shapeNum = aLayer.getShapeNum();
@@ -502,7 +495,7 @@ public class TrajUtil {
 
         if (aLayer.getShapeNum() > 0) {
             aLayer.setLayerName(new File(shpFile).getName());
-            LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.POLYLINE, Color.black, 1.0f);
+            LegendScheme aLS = LegendManage.createSingleSymbolLegendScheme(GeometryType.LINESTRING, Color.black, 1.0f);
             aLS.setFieldName("Year");
             aLayer.setLegendScheme(aLS);
             aLayer.setLayerDrawType(LayerDrawType.TRAJECTORY_LINE);
@@ -569,15 +562,15 @@ public class TrajUtil {
         i = 0;
         for (VectorLayer layer : layers) {
             for (int s = 0; s < layer.getShapeNum(); s++) {
-                PolylineShape shape = (PolylineShape) layer.getShapes().get(s);
-                if (shape.getPointNum() != pointNum) {
+                LineString shape = (LineString) layer.getShapes().get(s);
+                if (shape.getNumPoints() != pointNum) {
                     continue;
                 }
 
                 cluster = clusters.get(i);
                 int m = 0;
                 for (j = 0; j < pointNum; j++) {
-                    Coordinate point = shape.getPoints().get(j);
+                    Coordinate point = shape.getCoordinateN(j);
                     trajDataArray[cluster - 1][m] += point.y;
                     m += 1;
                     trajDataArray[cluster - 1][m] += point.x;
@@ -623,8 +616,8 @@ public class TrajUtil {
         i = 0;
         for (VectorLayer layer : layers) {
             for (int s = 0; s < layer.getShapeNum(); s++) {
-                PolylineShape shape = (PolylineShape) layer.getShapes().get(s);
-                if (shape.getPointNum() != pointNum) {
+                LineString shape = (LineString) layer.getShapes().get(s);
+                if (shape.getNumPoints() != pointNum) {
                     continue;
                 }
 
@@ -634,7 +627,7 @@ public class TrajUtil {
                 Coordinate[] trajA = new Coordinate[pointNum];
                 Coordinate[] trajB = new Coordinate[pointNum];
                 for (j = 0; j < pointNum; j++) {
-                    Coordinate point = shape.getPoints().get(j);
+                    Coordinate point = shape.getCoordinateN(j);
                     trajA[j] = new Coordinate(point.x, point.y);
                     y = trajDataArray[cluster - 1][m];
                     m += 1;
